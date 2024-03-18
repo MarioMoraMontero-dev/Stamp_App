@@ -1,0 +1,87 @@
+
+<ion-header [translucent]="true">
+  
+  <ion-toolbar>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="logoutApp()">
+        <ion-icon slot="start" name="exit-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons (click)="changeProfile()" slot="start">
+      <ion-button>
+        <ion-icon slot="end" name="swap-horizontal-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Perfil</ion-title>
+  </ion-toolbar>
+
+
+</ion-header>
+<ion-content>
+  
+
+  <div *ngIf="userData" class="main">
+    <div class="profileImage">
+      <img *ngIf="isPremium" class="bannerPremium" src="../../../assets/images/premium_user_Bg-01.png" alt="" srcset="">
+      <img class="userImg" *ngIf="userData.userType === 'EMPLOYER'" src="{{getProfileImage()}}" alt="" />
+      <img class="userImg" *ngIf="userData.userType === 'USER'" src="{{getProfileImage()}}" alt="" />
+    </div>
+    <div *ngIf ="isPremium" class="headerPremiun">
+      <p>Cuenta Premium</p>
+    </div>
+    <br/>
+    <form class="formRating" [ngClass]="{'noPremium': isPremium === false}"  [formGroup]="form">
+      <div class="custom-rating-div">
+        <div>
+          <ngx-star-rating formControlName="rating" [id]="'rating'"></ngx-star-rating>
+        </div>
+      </div>
+    </form>
+
+
+    <p *ngIf="userData.userType === 'EMPLOYER'" id="userName">
+      {{userData.profiles.employer.name}}
+    </p>
+    <p *ngIf="userData.userType === 'USER'" id="userName">
+      {{userData.profiles.user.name}}
+    </p>
+    <p>{{bodyTitle}}</p>
+    <div class="menuHomePage" *ngIf="userData.userType === 'EMPLOYER'">
+      <hr />
+      <div (click)="employerInfoPage()">
+        <p>Información de la empresa</p>
+        <img src="../../../assets/images/check.png" alt="" />
+      </div>
+      <hr />
+      <div (click)="createJobPage()">
+        <p>Crear Empleo</p>
+      </div>
+      <hr />
+      <div (click)="advertisingPage()">
+        <p>Administrar Publicidad</p>
+      </div>
+    </div>
+    <div class="menuHomePage" *ngIf="userData.userType === 'USER'">
+      <hr />
+      <div (click)="userGeneralDataPage()">
+        <p>Datos Generales</p>
+        <img *ngIf="currentStep >= 1" src="../../../assets/images/check.png" alt="" />
+      </div>
+      <hr />
+      <div (click)="cvPage()">
+        <p>CV</p>
+        <img *ngIf="currentStep >= 2" src="../../../assets/images/check.png" alt="" />
+      </div>
+      
+      <hr />
+      <div (click)="searchFilter()">
+        <p>Ajuste de Búsqueda</p>
+        <img *ngIf="currentStep === 3" src="../../../assets/images/check.png" alt="" />
+      </div>
+    </div>
+    <br />
+    <div  id="divBtn" >
+      <button (click)="getPremiumPage()">Adquirir cuenta premium</button>
+    </div>
+  </div>
+</ion-content>

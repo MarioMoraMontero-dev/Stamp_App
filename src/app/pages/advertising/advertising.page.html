@@ -1,0 +1,227 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-icon (click)="goBack()" name="arrow-back-outline"></ion-icon>
+        <ion-title>Administrar publicidad</ion-title>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="main">
+
+    <section id="modalCameraOfferListADS" class="modalCamera hidden">
+      <div>
+        <div class="closeIcon" (click)="closeNotificationModal()">
+          <ion-icon name="close-outline"></ion-icon>
+        </div>
+  
+      <div *ngIf="isDeleteADS">
+        <div class="selectPhotoMode">
+          <br>
+          <img src="../../../assets/images/deleteItem.png" alt="">
+          <h4>Eliminar anuncio</h4>
+          <p>¿Está Seguro que desea eliminar este anuncio de manera permamente?</p>
+        </div>
+  
+        <div id="divBtn3" >
+          <button (click)="closeNotificationModal()" class="btn3">Cancelar</button>
+        </div>
+        <br/>
+      
+  
+        
+        <div id="divBtn4">
+          <button (click)="deleteAds()" class="btn4">OK</button>
+        </div>
+      </div>
+    </div>
+      <br />
+    </section>
+    <div class="overlay hidden" id="overlayCameraOfferListADS" (click)="closeNotificationModal();closeNotificationModal()">
+    </div>
+
+
+    <section id="modalErrorAds" class="modalError hidden">
+      <div>
+        <div class="closeIcon" (click)="closeModalError()">
+          <ion-icon name="close-outline"></ion-icon>
+          <div id="circle">
+            <span>X</span>
+          </div>
+        </div>
+        <br />
+        <div class="modalBody">
+          <h2>¡Error!</h2>
+          <!-- <p>Por favor intenta de nuevo más tarde</p> -->
+          <p>{{modalErrroBody}}</p>
+        </div>
+      </div>
+      <br />
+      <br />
+      <div id="divBtn">
+        <button class="btn" (click)="closeModalError()">
+          Volver a intentar
+        </button>
+      </div>
+    </section>
+
+
+    <section id="modalCameraAds" class="modalCamera hidden">
+      <div>
+        <div class="closeIcon" (click)="closePhotoModal()">
+          <ion-icon name="close-outline"></ion-icon>
+        </div>
+        <div class="selectPhotoMode">
+          <button (click)="pickImageCamera()">
+            <img src="../../../assets/images/select_photo.png" alt="" srcset="" /><br />
+            <p>Tomar foto</p>
+          </button>
+
+          <button (click)="pickImageLibrary()">
+            <img src="../../../assets/images/select_gallery.png" alt="" srcset="" /><br />
+            <p>Abrir galería</p>
+          </button>
+        </div>
+      </div>
+      <br />
+    </section>
+    <div class="overlay hidden" id="overlayCameraAds" (click)="closePhotoModal();"></div>
+    <div class="overlay hidden" id="overlayErrorAds" (click)="closeModalError();"></div>
+
+
+    <div *ngIf="isListAdsPage">
+      <div class="noOffers" *ngIf="adsList.length === 0">
+        <img src="../../../assets/images/No_anuncios-01.png" alt="" srcset="">
+        <p>Aún no hay ningún anuncio</p>
+        <div class="addOffer">
+          <button (click)="createAdsPage()">
+            <ion-icon name="add-outline"></ion-icon>
+          </button>
+          <p>Crear anuncio</p>
+        </div>
+      </div>
+      <div class="offersList" *ngIf="adsList.length > 0">
+        <div *ngFor="let a of adsList">
+          <h2>{{a.title}}</h2>
+          <p>Publicado</p>
+          <p>Fecha de publicación: {{getPublicationDate(a.created)}}</p>
+          <div class="actionsOffers">
+            <div class="divSvg" (click)="deleteAdsId(a._id)">
+              <svg class="svg-icon" viewBox="0 0 20 23">
+                <path fill="#00A19A"
+                  d="M16,9v10H8V9h8m-1.5,-6h-5l-1,1H5v2h14V4h-3.5l-1,-1zM18,7H6v12c0,1.1 0.9,2 2,2h8c1.1,0 2,-0.9 2,-2V7z" />
+                />
+              </svg>
+            </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+      <ion-fab *ngIf="adsList.length > 0" slot="fixed" vertical="bottom" horizontal="end">
+        <ion-fab-button (click)="createAdsPage()">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </div>
+
+    <div *ngIf="isCreateAdsPage">
+      <form [formGroup]="adsForm">
+        <ion-item>
+          <ion-label position="floating">Título del anuncio</ion-label>
+          <ion-input formControlName="title" type="text"></ion-input>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && errorControl.title.errors?.required">
+            Título es requerido
+          </span>
+        </div>
+
+        <!-- modal preview -->
+        <section id="modalPrev" class="modal hidden">
+          <div>
+            <div class="closeIcon" (click)="closeAdsModal()">
+              <ion-icon name="close-outline"></ion-icon>
+            </div>
+          </div>
+          <img src={{base64Img}} alt="" srcset="">
+          <div id="divBtn">
+            <button class="btn">Ir</button>
+          </div>
+        </section>
+        <div class="overlay hidden" id="overlayAdds" (click)="closeAdsModal();"></div>
+        <!-- modal preview -->
+
+        <br />
+        <h5>Zona geográfica donde aplica el anuncio</h5>
+        <br />
+        <ion-item>
+          <ion-select (ionChange)="selectCountry()" formControlName="country" interface="popover" placeholder="País">
+            <ion-select-option *ngFor="let c of countriesList" value={{c._id}}>{{c.name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && errorControl.country.errors?.required">
+            País requerido
+          </span>
+        </div>
+        <br/>
+        <ion-item *ngIf="adsForm.controls.country.value != undefined">
+          <ion-select formControlName="state" interface="popover" placeholder="Estado/Provincia">
+            <ion-select-option *ngFor="let e of stateListData" value={{e._id}}> {{e.name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div class="divError">
+          <span class="error"
+            *ngIf="isSubmitted && errorControl.state.errors?.required && adsForm.controls.country.value != undefined">
+            Estado/Provincia requerido
+          </span>
+        </div>
+
+        <div (click)="openPhotoModal()" id="btnCameraProfilePhoto">
+          <img *ngIf="base64Img!=''" src={{base64Img}} alt="" srcset="" width="100%" height="100%" />
+
+          <img *ngIf="base64Img==''" src="../../../assets/images/camera.png" width="100%" height="100%" alt="" srcset="" />
+
+          <p>Subir imagen</p>
+          <label>Recomendable (800px x 600px)</label>
+        </div>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && base64Img == ''">
+            Imagen es requerida
+          </span>
+        </div>
+        <br />
+        <h5>Link al sitio web del anunciante</h5>
+        <br />
+        <ion-item>
+          <ion-input placeholder="Ingrese una URL (ej: www.empresa.com)" formControlName="link" type="text"></ion-input>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && errorControl.link.errors?.required">
+            Link es requerido
+          </span>
+        </div>
+      </form>
+      <div class="divBtn">
+        <button id="previewBtn" (click)="openPreviewModal()">Vista Previa</button>
+        <button id="publishBtn" (click)="createAds()">Publicar Anuncio</button>
+      </div>
+    </div>
+
+
+  </div>
+  <ngx-loading [show]="isLoading" [config]="{
+    animationType: ngxLoadingAnimationTypes.circle,
+    primaryColour: primaryColour,
+    backdropBorderRadius: '3px',
+    fullScreenBackdrop:true
+  }"></ngx-loading>
+
+
+
+ 
+
+</ion-content>

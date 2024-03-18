@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-icon (click)="goBack()" name="arrow-back-outline"></ion-icon>
+        <ion-title>Plan Premium</ion-title>
+      </ion-buttons>
+    </ion-toolbar>
+
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [style.background-image]="planImage">
+
+  <div class="main">
+
+    <div *ngIf="premiumPlanPage == 0">
+      <h2>Cuenta Premium</h2>
+      <div class="pricesPlan">
+        <p>$10 / mes</p>
+        <p>$28 / trimestre</p>
+        <p>$50 / semestre</p>
+        <p>$100 / anual</p>
+      </div>
+    </div>
+
+    <div *ngIf="premiumPlanPage != 0">
+      <div class="arrows">
+        <ion-icon (click)="backPremiumPage()" name='arrow-back-circle-outline'></ion-icon>
+        <ion-icon (click)="nextPremiumPage()" name='arrow-forward-circle-outline' *ngIf="premiumPlanPage != 3"></ion-icon>
+      </div>
+      <div *ngIf="premiumPlanPage == 1">
+        <h2>Plan Bronze</h2>
+        <div class="pricesPlan">
+          <p>$10 / mes</p>
+          <p>$28 / trimestre</p>
+          <p>$50 / semestre</p>
+          <p>$100 / anual</p>
+        </div>
+      </div>
+      <div *ngIf="premiumPlanPage == 2">
+        <h2>Plan Plata</h2>
+        <div class="pricesPlan">
+          <p>$20 / mes</p>
+          <p>$58 / trimestre</p>
+          <p>$110 / semestre</p>
+          <p>$220 / anual</p>
+        </div>
+      </div>
+      <div *ngIf="premiumPlanPage == 3">
+        <h2>Plan Oro</h2>
+        <div class="pricesPlan">
+          <p>$30 / mes</p>
+          <p>$88 / trimestre</p>
+          <p>$150 / semestre</p>
+          <p>$300 / anual</p>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="divBtn">
+      <button (click)="getMoreDetailsPage()">Ver más detalles</button>
+    </div>
+  </div>
+</ion-content>

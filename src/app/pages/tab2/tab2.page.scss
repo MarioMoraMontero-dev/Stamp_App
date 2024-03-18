@@ -1,0 +1,437 @@
+ion-title {
+    color: #00a19a;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+ion-buttons {
+    color: #00a19a !important;
+    font-size: 1.5rem;
+    padding-left: 0.5em;
+}
+
+:host {
+    .item-interactive.ion-invalid {
+        --highlight-background: #00a19a !important;
+    }
+
+    .item-interactive.ion-valid {
+        --highlight-background: #00a19a !important;
+    }
+}
+
+:host(.radio-checked) .radio-icon {
+    border-color: #00a19a !important;
+}
+
+ion-select {
+    width: 100%;
+}
+
+
+ion-item {
+    z-index: 0;
+    width: 100%;
+}
+
+.main {
+    // text-align: center;
+
+    .noOffers {
+        text-align: center;
+        position: fixed;
+        top: 45%;
+        width: 100%;
+
+        p {
+            color: gray;
+        }
+    }
+
+    .modalError {
+        text-align: center;
+        left: 52%;
+        margin: -100px 0 0 -150px;
+        position: fixed;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 15px;
+        z-index: 2;
+        top: 33%;
+        width: 18rem;
+
+        p {
+            font-size: 0.9rem;
+        }
+
+        &.hidden {
+            display: none;
+        }
+
+        #divBtn {
+            .btn {
+                height: 3rem;
+                width: 9em;
+                background-color: #00A19A;
+                color: white;
+                border-radius: 30px;
+                margin-bottom: 1em;
+                font-size: 15px;
+            }
+        }
+
+        .closeIcon {
+            border-top-right-radius: 15px;
+            border-top-left-radius: 15px;
+            margin-bottom: -1em;
+            text-align: end;
+            color: white;
+            font-size: 1.7rem;
+            background-color: rgb(217, 119, 119);
+            padding-bottom: 4rem;
+
+            ion-icon {
+                margin: 1rem 1rem 0 0;
+                position: initial;
+            }
+
+            #circle {
+                text-align: center;
+                border-radius: 50%;
+                height: 3.5rem;
+                padding: 0.3rem;
+                margin: 0 7rem;
+                border: 5px solid white;
+
+                span {
+                    font-size: 2rem;
+                    font-weight: bold;
+                }
+            }
+        }
+
+        .modalBody {
+            padding: 1rem 1rem 0;
+        }
+
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(3px);
+        z-index: 1;
+
+        &.hidden {
+            display: none;
+        }
+    }
+}
+
+ion-icon {
+    position: absolute;
+    left: 5%;
+    z-index: 1000;
+}
+
+ion-button {
+    text-transform: none;
+    width: 50%;
+    max-width: 175px;
+}
+
+.divOfferRating {
+    margin-top: -0.5em;
+
+    ngx-star-rating {
+        pointer-events: none;
+    }
+
+}
+
+
+h4 {
+    color: #666666;
+    font-weight: bold;
+}
+
+button {
+    height: 2.5rem;
+    width: 45%;
+    max-width: 150px;
+    background-color: white;
+    color: #00A19A;
+    border: 1px solid;
+    border-radius: 30px;
+    font-size: 14px;
+    margin: auto;
+}
+
+.div-btn-m {
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    width: 70%;
+}
+
+.custom-rating-div {
+    width: 90%;
+    margin: auto;
+    display: flex;
+}
+
+.p-color {
+    color: #666666;
+}
+
+.header-border {
+    border-bottom: 1px solid gainsboro;
+    width: 90%;
+    margin: auto;
+}
+
+.custom-w {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+
+    &.advertising {
+        text-align: center;
+        margin-top: -1em;
+
+        button {
+            height: 2.5rem;
+            width: 11em;
+        }
+
+        img {
+            max-width: 100%;
+            width: 100%;
+        }
+
+        .closeIcon {
+            text-align: start;
+            margin-bottom: -2em;
+
+            ion-icon {
+                color: #00A19A;
+                font-size: 30px;
+            }
+        }
+    }
+}
+
+.btn-icon-share {
+    width: 27px;
+    height: 27px;
+    top: 2%;
+    left: inherit;
+    right: 5%;
+}
+
+
+#divBtn {
+    .btn {
+        height: 3rem;
+        width: 9em;
+        background-color: #00A19A;
+        color: white;
+        border-radius: 30px;
+        margin-bottom: 1em;
+        font-size: 15px;
+    }
+}
+
+hr {
+    border-top: 1px solid gray;
+}
+
+.modalCamera {
+    text-align: center;
+    padding: 1rem 1rem 0;
+    top: 20%;
+    margin: 1em;
+    right: 0;
+    left: 0;
+    position: fixed;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    z-index: 9999999;
+
+    &.hidden {
+        display: none;
+    }
+
+    .closeIcon {
+        margin-left: 90%;
+        position: relative;
+        color: #00A19A;
+        font-size: 1.7rem;
+    }
+
+    #divBtn {
+        .btn {
+            height: 2.5rem;
+            width: 100%;
+            max-width: 100%;
+            background-color: #00a19a;
+            color: white;
+            border-radius: 30px;
+            font-size: 1rem;
+            margin-bottom: -1em;
+        }
+    }
+
+    .selectPhotoMode {
+        img {
+            width: 10rem;
+        }
+
+        h4 {
+            color: #00A19A;
+        }
+
+        p {
+            font-family: 'Lato', sans-serif;
+            font-size: 15px;
+        }
+    }
+}
+
+
+
+.bolderTitle {
+    font-weight: bold;
+
+    span {
+        font-weight: 500;
+        font-size: 15px;
+    }
+}
+
+ion-item-divider {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    border: none;
+    margin-bottom: 7px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: inherit;
+}
+
+.calification {
+    h4 {
+        color: #00a19a;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .div-btn-m {
+        margin-top: 50px;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    button {
+        height: 3rem;
+        max-width: 100%;
+        width: 60%;
+        background-color: #00a19a;
+        color: white;
+        border-radius: 30px;
+        font-size: 1rem;
+    }
+
+    .divError {
+        text-align: center;
+
+        .error {
+            font-size: small;
+            color: red;
+        }
+    }
+}
+
+
+.employerInfo {
+    .custom-btn-report {
+        text-transform: none;
+        height: 30px;
+    }
+
+    ngx-star-rating {
+        pointer-events: none;
+    }
+
+    h4 {
+        font-size: 25px;
+    }
+
+    .bolder {
+        font-weight: bolder;
+
+        span {
+            font-size: 16px;
+            font-weight: 300;
+        }
+    }
+
+    .imgEmployer {
+        max-width: 100%;
+        margin-top: 1em;
+        text-align: center;
+
+        img {
+            width: 80%;
+        }
+    }
+
+    .emailInfo {
+        span {
+            margin-left: 1.5em;
+        }
+
+        ion-icon {
+            color: #00A19A;
+        }
+    }
+}
+
+
+.reportPage {
+    p {
+        text-align: initial;
+        margin-left: 1em;
+    }
+
+    ion-button {
+        margin-top: 10rem;
+    }
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0em 1em;
+    top: 10%;
+    text-align: center;
+
+    .divError {
+        text-align: center;
+
+        .error {
+            font-size: small;
+            color: red;
+        }
+    }
+}

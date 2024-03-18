@@ -1,0 +1,79 @@
+<ion-content>
+  <div class="main">
+    <div id="stampLogo">
+      <img src="../../../assets/images/logo.png" alt="" srcset="" />
+    </div>
+    <br />
+
+
+    <div class="support" id="cardLoginForm">
+      <section class="modalError hidden">
+        <div>
+          <div class="closeIcon" (click)="closeModalError()">
+            <ion-icon name="close-outline"></ion-icon>
+            <div id="circle">
+              <span>X</span>
+            </div>
+          </div>
+          <br />
+          <div class="modalBody">
+            <h2>¡Error!</h2>
+            <!-- <p>Por favor intenta de nuevo más tarde</p> -->
+            <p>{{modalErrroBody}}</p>
+          </div>
+        </div>
+        <br />
+        <br />
+        <div id="divBtn">
+          <button class="btn" (click)="closeModalError()">
+            Volver a intentar
+          </button>
+        </div>
+      </section>
+      <div class="overlay hidden" (click)="closeModalError();"></div>
+
+      <br />
+      <form [formGroup]="loginForm">
+        <ion-item>
+          <ion-label position="floating">Correo electrónico</ion-label>
+          <ion-input formControlName="email" type="email"></ion-input>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && errorControl.email.errors?.required">
+            Correo electrónico requerido
+          </span>
+          <span class="error" *ngIf="isSubmitted && errorControl.email.errors?.email">
+            Formato inválido
+          </span>
+        </div>
+        <br />
+
+        <ion-item>
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input formControlName="password" [type]="passwordType" clearOnEdit="false"></ion-input>
+          <ion-icon slot="end" [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()'></ion-icon>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && errorControl.password.errors?.required">
+            Contraseña requerida
+          </span>
+        </div>
+      </form>
+      <br /><br />
+      <span class="infoText" (click)="recoveryPassword()">¿Olvidó su contraseña?</span><br /><br /><br />
+      <button (click)="loginAccount()">Ingresar</button><br /><br /><br />
+      <span class="infoText">¿No tienes una cuenta?,
+        <span id="registerSpan" (click)="registerAccount()">registrate</span></span>
+    </div>
+  </div>
+
+
+  <ngx-loading [show]="isLoading" [config]="{
+        animationType: ngxLoadingAnimationTypes.circle,
+        primaryColour: primaryColour,
+        backdropBorderRadius: '3px',
+        fullScreenBackdrop:true
+      }"></ngx-loading>
+</ion-content>
+
+<ion-footer> </ion-footer>

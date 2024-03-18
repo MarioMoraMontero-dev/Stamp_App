@@ -1,0 +1,67 @@
+<ion-content>
+    <div id="secondBackground">
+        <div class="logoImg divAnimation" *ngIf="stepNumber === 1" >
+            <img class="efectImage"   src="../../assets/images/stepper_icon_1.png" alt="" srcset="">
+        </div>
+        <div class="logoImg divAnimation" *ngIf="stepNumber === 2" >
+            <img class="efectImage"   src="../../assets/images/stepper_icon_2.png" alt="" srcset="">
+        </div>
+        <div class="logoImg divAnimation" *ngIf="stepNumber === 3" >
+            <img class="efectImage"   src="../../assets/images/stepper_icon_3.png" alt="" srcset="">
+
+        </div>
+       
+        <div class="mainCard divAnimation" *ngIf="stepNumber === 1">
+            <p id="title">Necesitas Empleo</p>
+            <hr>
+            <br>
+            <div>
+                <p>Empleado o empleador. Ambos a un click de distancia.</p>
+            </div>
+            <br>
+            <div class="stepperPosition">
+                <span class="dot selected"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+            <p></p>
+        </div>
+        <div class="mainCard divAnimation" *ngIf="stepNumber === 2">
+            <p id="title">Buscas colaboradores</p>
+            <hr>
+            <br>
+            <div>
+                <p>Dejale el periódico a tu abuelo. Tener empleo es tan sencillo como usar Stamp</p>
+            </div>
+            <br>
+            <div class="stepperPosition">
+                <span class="dot"></span>
+                <span class="dot selected"></span>
+                <span class="dot"></span>
+            </div>
+            <p></p>
+        </div>
+        <div class="mainCard divAnimation" *ngIf="stepNumber === 3">
+            <p id="title">Encuentralo en tu zona</p>
+            <hr>
+            <div>
+                <p>Busca empleo en cualquier lado del mundo! O: Si sos premium podés encontrar tu empleo donde sea y cuando
+                    sea (psss... no importa el lugar en el mundo)</p>
+            </div>
+            <br>
+            <div class="stepperPosition">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot selected"></span>
+            </div>
+            <p></p>
+        </div>
+        <div class="nextBtnStepper">
+            <button (click)="nextStepper()">
+                <ion-icon name="arrow-forward-outline"></ion-icon>
+            </button>
+        </div>
+    </div>
+    
+
+</ion-content>

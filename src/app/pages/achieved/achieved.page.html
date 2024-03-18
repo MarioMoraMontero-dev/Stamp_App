@@ -1,0 +1,103 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons>
+        <ion-title>Ofertas de Empleos</ion-title>
+      </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content> 
+
+  <section id="modalErrorAch" class="modalError hidden">
+    <div>
+      <div class="closeIcon" (click)="closeModalError()">
+        <ion-icon name="close-outline"></ion-icon>
+        <div id="circle">
+          <span>X</span>
+        </div>
+      </div>
+      <br />
+      <div class="modalBody">
+        <h2>¡Error!</h2>
+        <!-- <p>Por favor intenta de nuevo más tarde</p> -->
+        <p>{{modalErrroBody}}</p>
+      </div>
+    </div>
+    <br />
+    <br />
+    <div id="divBtn">
+      <button class="btn" (click)="closeModalError()">
+        Volver a intentar
+      </button>
+    </div>
+  </section>
+  <div class="overlay hidden" id="overlayErrorAch" (click)="closeModalError();"></div>
+  <div class="main">
+    <ion-segment value="default">
+      <ion-segment-button (click)="selectApplied()" value="default">
+        <ion-label>Aplicados</ion-label>
+      </ion-segment-button>
+      <ion-segment-button (click)="selectDiscarded()" value="segment">
+        <ion-label>Descartados</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+
+
+    <div class="divNoJobs" *ngIf="jobOffersApplied.length === 0 && IsPage === 'APPLIED'">
+      <p >No has aplicado a alguna oferta.</p>
+      <p>Diriguete a explorar para realizar esta acción.</p>
+    </div>
+
+    <div  *ngIf="jobOffersApplied.length !== 0 && IsPage === 'APPLIED'" style="width: 100%;">
+      <div *ngFor="let dataEm of jobOffersApplied">
+        <ion-card (click)="openInfo(dataEm.offer._id)" >
+          <ion-card-header>
+            <ion-card-title> {{dataEm.offer.job_name}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p>{{dataEm.offer.employer.name}}</p>
+            
+          
+
+            <p>{{getPublicationDate(dataEm.creation_date)}}</p>
+        
+          </ion-card-content>
+        </ion-card>
+      </div>
+     
+    </div>
+  
+   
+  
+    <div class="divNoJobs" *ngIf="jobOffersDiscarded.length === 0 && IsPage === 'DISCARDED'">
+      <p>No has descartado a alguna oferta.</p>
+      <p>Diriguete a explorar para realizar esta acción.</p>
+    </div>
+  </div>
+
+
+  <div  *ngIf="jobOffersDiscarded.length !== 0 && IsPage === 'DISCARDED'" >
+    <div *ngFor="let dataEm of jobOffersDiscarded">
+      <ion-card (click)="openInfo(dataEm.offer._id)">
+        <ion-card-header>
+          <ion-card-title>{{dataEm.offer.job_name}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>{{dataEm.offer.employer.employer_Name}}</p>
+            <p>{{getPublicationDate(dataEm.creation_date)}}</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    
+    
+  </div>
+
+  <ngx-loading [show]="isLoading" [config]="{
+    animationType: ngxLoadingAnimationTypes.circle,
+    primaryColour: primaryColour,
+    backdropBorderRadius: '3px',
+    fullScreenBackdrop:true
+  }"></ngx-loading>
+
+</ion-content>

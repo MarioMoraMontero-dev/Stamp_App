@@ -1,0 +1,8 @@
+{
+  "name": "stamp-app",
+  "integrations": {
+    "cordova": {},
+    "capacitor": {}
+  },
+  "type": "angular"
+}

@@ -1,0 +1,221 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-icon (click)="goBack()" name="arrow-back-outline"></ion-icon>
+        <ion-title>Datos Generales</ion-title>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="main">
+
+    <div (click)="openPhotoModal()" id="btnCameraProfilePhoto">
+      <img *ngIf="profileImg != ''" src="{{profileImg}}" alt="" />
+      <img *ngIf="(base64Img == '' || base64Img == undefined) && profileImg == ''"
+        src="../../../assets/images/camera.png" alt="" srcset="">
+      <img *ngIf="base64Img != '' && profileImg == ''" src={{base64Img}} alt="" srcset="">
+    </div>
+
+    <section class="modalCamera hidden">
+      <div>
+        <div class="closeIcon" (click)="closePhotoModal()">
+          <ion-icon name="close-outline"></ion-icon>
+        </div>
+        <div class="selectPhotoMode">
+          <button (click)="pickImageCamera()">
+            <img src="../../../assets/images/select_photo.png" alt="" srcset=""><br>
+            <p>Tomar foto</p>
+          </button>
+
+          <button (click)="pickImageLibrary()">
+            <img src="../../../assets/images/select_gallery.png" alt="" srcset=""><br>
+            <p>Abrir galería</p>
+          </button>
+        </div>
+      </div>
+      <br>
+    </section>
+
+    <div class="overlay hidden" id="overlayCameraEmployerData" (click)="closePhotoModal();closeModalPremiumGPS()"></div>
+    <div class="overlay hidden" id="overlayErrorEmployerData" (click)="closeModalError();closeModalPremiumGPS()"></div>
+
+    <div id="cardUserForm">
+      <section id="modalErrorEmployerData" class="modalError hidden">
+        <div>
+          <div class="closeIcon" (click)="closeModalError()">
+            <ion-icon name="close-outline"></ion-icon>
+            <div id="circle">
+              <span>X</span>
+            </div>
+          </div>
+          <br />
+          <div class="modalBody">
+            <h2>¡Error!</h2>
+            <!-- <p>Por favor intenta de nuevo más tarde</p> -->
+            <p>{{modalErrroBody}}</p>
+          </div>
+        </div>
+        <br />
+        <br />
+        <div id="divBtn">
+          <button class="btn" (click)="closeModalError()">
+            Volver a intentar
+          </button>
+        </div>
+      </section>
+      <section id="modalPremiumEmployerData" class="modalCVSent hidden">
+        <div>
+          <div class="closeIcon" (click)="closeModalPremiumGPS()">
+            <ion-icon name="close-outline"></ion-icon>
+          </div>
+          <div class="selectPhotoMode">
+            <br>
+            <img src="../../../assets/images/offer_apply_confirmation.png" alt="">
+            <br>
+            <h4>Necesitas Premium</h4>
+            <p>Si deseas realizar cambios en tu ubicación en tiempo real o situarte en cualquier lugar del mundo para
+              buscar empleo,
+              necesitas el Plan Premium</p>
+          </div>
+          <div id="divBtn">
+            <button (click)="goToPremiumPage()" class="btn">Obtener Plan Premium</button>
+          </div>
+        </div>
+        <br />
+      </section>
+
+      <form [formGroup]="updateEmployerForm">
+        <ion-item>
+          <ion-label position="floating">Nombre de la empresa</ion-label>
+          <ion-input formControlName="name" type="text"></ion-input>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && error.name.errors?.required">
+            Nombre requerido
+          </span>
+        </div>
+        <br>
+
+        <ion-item>
+          <ion-label position="floating">Descripción de la empresa</ion-label>
+          <ion-input formControlName="description" type="text"></ion-input>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && error.description.errors?.required">
+            Descripción requerida
+          </span>
+        </div>
+        <br>
+
+        <ion-item>
+          <ion-label position="floating">Correo electrónico</ion-label>
+          <ion-input [disabled]="true" formControlName="email" type="email"></ion-input>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && error.email.errors?.required">
+            Correo electrónico requerido
+          </span>
+        </div>
+        <br>
+        <br>
+        <ion-item>
+          <ion-label position="floating">Número de teléfono</ion-label>
+          <ion-input formControlName="phone_number" type="tel"></ion-input>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && error.phone_number.errors?.required">
+            Núero de teléfono requerido
+          </span>
+        </div>
+        <br>
+        <ion-item>
+          <ion-label position="floating">Cédula jurídica (opcional)</ion-label>
+          <ion-input formControlName="enterprise_ID" type="text"></ion-input>
+        </ion-item>
+        <br>
+
+        <ion-item>
+          <ion-label position="floating">Nombre del empleador</ion-label>
+          <ion-input formControlName="employer_Name" type="text"></ion-input>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && error.employer_Name.errors?.required">
+            Nombre de empleador requerido
+          </span>
+        </div>
+        <br>
+
+        <ion-item>
+          <ion-label position="floating">Contraseña anterior</ion-label>
+          <ion-input formControlName="oldPassword" [type]="passwordType" clearOnEdit="false"></ion-input>
+          <ion-icon slot="end" [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()'></ion-icon>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && error.oldPassword.errors?.required">
+            Anterior contraseña requerida
+          </span>
+        </div>
+        <br>
+        <ion-item>
+          <ion-label position="floating">Contraseña nueva</ion-label>
+          <ion-input formControlName="newPassword" [type]="passwordType" clearOnEdit="false"></ion-input>
+          <ion-icon slot="end" [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()'></ion-icon>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && error.newPassword.errors?.required">
+            Nueva contraseña es requerida
+          </span>
+        </div>
+        <br>
+        <ion-item>
+          <ion-label position="floating">Confirmar contraseña</ion-label>
+          <ion-input formControlName="confirmPassword" [type]="passwordType" clearOnEdit="false"></ion-input>
+          <ion-icon slot="end" [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()'></ion-icon>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && error.confirmPassword.errors?.required">
+            Debe confirmar contraseña
+          </span>
+        </div>
+        <div class="divError" *ngIf="!samePassword()">
+          <span class="error">
+            Contraseñas no coinciden
+          </span>
+        </div>
+      </form>
+      <br>
+      <div class="btnSelect">
+        <div>
+          <p>Ubicación basada en</p>
+        </div>
+        <div class="btnOptions localization">
+          <button style="font-size: 13px;" [ngClass]="{'selected': deviceLocalizationSelected === 'PHONE'}"
+            (click)="selectDeviceLocalization('PHONE')" class="unselected" id="deviceBtn">Dispositivo</button>
+          <button [ngClass]="{'selected': deviceLocalizationSelected === 'OTHER'}"
+            (click)="selectDeviceLocalization('OTHER')" class="unselected" id="otherBtn">Otra</button>
+        </div>
+      </div>
+      <div class="divError">
+        <span class="error" *ngIf="isSubmitted && deviceLocalizationSelected == ''">
+          Debe de seleccionar un método de ubicación.
+        </span>
+      </div>
+      <br>
+      <button (click)="updateData()">Actualizar</button><br><br><br>
+    </div>
+
+
+  </div>
+
+  <ngx-loading [show]="isLoading" [config]="{
+    animationType: ngxLoadingAnimationTypes.circle,
+    primaryColour: primaryColour,
+    backdropBorderRadius: '3px',
+    fullScreenBackdrop:true
+  }"></ngx-loading>
+
+
+</ion-content>

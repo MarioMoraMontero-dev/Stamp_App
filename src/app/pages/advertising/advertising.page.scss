@@ -1,0 +1,384 @@
+ion-content {
+  --background: none;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+:host {
+  .item-interactive.ion-invalid {
+    --highlight-background: #00a19a !important;
+  }
+
+  .item-interactive.ion-valid {
+    --highlight-background: #00a19a !important;
+  }
+}
+
+ion-item {
+  z-index: 0;
+}
+
+h5 {
+  color: #848480;
+  margin-bottom: -0.5em;
+  text-align: initial;
+  margin-left: 0.5em;
+}
+
+ion-item>ion-label {
+  color: #848480 !important;
+}
+
+ion-item.item-has-focus>ion-label {
+  color: #00a19a !important;
+}
+
+ion-title {
+  color: #00a19a;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+ion-buttons {
+  color: #00a19a !important;
+  font-size: 1.5rem;
+  padding-left: 0.5em;
+}
+
+.offersList {
+  text-align: start;
+
+  h2 {
+    color: #00A19A;
+  }
+
+  p {
+    font-weight: 700;
+    color: #848480;
+    margin-top: -0.5em;
+  }
+
+  hr {
+    border-top: 1px solid gray;
+  }
+
+  .actionsOffers {
+    width: 100%;
+
+    .divSvg {
+      text-align: end;
+      margin-top: -2em;
+    }
+
+    svg {
+      width: 1.5em;
+    }
+  }
+}
+
+.main {
+  margin: 1rem 2rem;
+  text-align: center;
+
+  .addOffer {
+    text-align: center;
+    margin-top: 2em;
+
+    button {
+      background: #005989;
+      box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+      border-radius: 50%;
+      padding: 0.5rem;
+
+      ion-icon {
+        color: white;
+        font-size: 2.5rem;
+      }
+
+    }
+  }
+
+  #btnCameraProfilePhoto {
+    text-align: center;
+    margin-top: 1em;
+
+    img {
+      width: 150px !important;
+      border-radius: 50% !important;
+      border: 5px solid #DBDBDB !important;
+      height: 130px !important;
+    }
+
+    p {
+      color: #848480;
+      margin: 0.5em 0;
+    }
+
+    label {
+      color: #00a19a;
+      font-size: 0.8rem;
+    }
+  }
+
+  .divError {
+    text-align: center;
+
+    .error {
+      font-size: small;
+      color: red;
+    }
+  }
+
+  .divBtn {
+    margin-top: 1.5em;
+
+    button {
+      height: 3rem;
+      width: 18rem;
+      color: white;
+      border-radius: 30px;
+      font-size: 15px;
+      margin-bottom: 1em;
+
+      &#previewBtn {
+        background-color: #005989;
+      }
+
+      &#publishBtn {
+        background-color: #00a19a;
+      }
+    }
+  }
+}
+
+.modal {
+  text-align: center;
+  position: fixed;
+  max-width: 100%;
+  top: 10%;
+  left: 0%;
+  right: 0%;
+  background-color: white;
+  z-index: 2;
+
+  .closeIcon {
+    margin-bottom: -1em;
+    text-align: end;
+    color: #00A19A;
+    font-size: 1.7rem;
+
+    ion-icon {
+      background: white;
+      border-radius: 50%;
+    }
+  }
+
+  #divBtn {
+    .btn {
+      height: 2rem;
+      width: 9em;
+      background-color: #00A19A;
+      color: white;
+      border-radius: 30px;
+      font-size: 15px;
+      margin-top: 1em;
+      margin-bottom: 1em;
+    }
+  }
+
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modalCamera {
+  text-align: center;
+  padding: 1rem 1rem 0;
+  position: sticky;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  z-index: 2;
+  top: 15%;
+
+  &.hidden {
+      display: none;
+  }
+
+  .closeIcon {
+      margin-bottom: -1em;
+      text-align: end;
+      color: #00A19A;
+      font-size: 1.7rem;
+  }
+
+  #divBtn {
+      .btn {
+          height: 2rem;
+          width: 100%;
+          background-color: #00a19a;
+          color: white;
+          border-radius: 30px;
+          font-size: 1rem;
+      }
+  }
+
+  .selectPhotoMode {
+      img {
+          width: 10rem;
+      }
+
+      h4 {
+          color: #00A19A;
+      }
+
+      p {
+          font-family: 'Lato', sans-serif;
+          font-size: 15px;
+      }
+  }
+}
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+  z-index: 1;
+
+  &.hidden {
+    display: none;
+  }
+}
+
+ion-fab {
+  position: fixed;
+  margin-bottom: 3em;
+  margin-right: 1em;
+}
+
+.noOffers {
+  img {
+    width: 60%;
+    margin-top: 10%;
+  }
+}
+
+.modalError {
+  text-align: center;
+  left: 52%;
+  margin: -100px 0 0 -150px;
+  position: fixed;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  z-index: 2;
+  top: 33%;
+  width: 18rem;
+
+  p {
+    font-size: 0.9rem;
+  }
+
+  &.hidden {
+    display: none;
+  }
+
+  #divBtn {
+    .btn {
+      height: 3rem;
+      width: 9em;
+      background-color: #00A19A;
+      color: white;
+      border-radius: 30px;
+      margin-bottom: 1em;
+      font-size: 15px;
+    }
+  }
+
+  .closeIcon {
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    margin-bottom: -1em;
+    text-align: end;
+    color: white;
+    font-size: 1.7rem;
+    background-color: rgb(217, 119, 119);
+    padding-bottom: 4rem;
+
+    ion-icon {
+      margin: 1rem 1rem 0 0;
+    }
+
+    #circle {
+      text-align: center;
+      border-radius: 50%;
+      height: 3.5rem;
+      padding: 0.3rem;
+      margin: 0 7rem;
+      border: 5px solid white;
+
+      span {
+        font-size: 2rem;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .modalBody {
+    padding: 1rem 1rem 0;
+  }
+
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+  z-index: 1;
+
+  &.hidden {
+    display: none;
+  }
+}
+
+
+#divBtn3 {
+  .btn3 {
+      height: 3rem;
+      width: 9em;
+      background-color: white !important;
+      color: gray !important;
+      border-radius: 30px;
+      margin-bottom: 1em;
+      font-size: 15px;
+  }
+}
+
+
+#divBtn4 {
+  .btn4 {
+      height: 3rem;
+      width: 100%;
+      background-color: #00A19A !important;
+      color: white !important;
+      border-radius: 30px;
+      margin-bottom: 1em;
+      font-size: 15px;
+  }
+}

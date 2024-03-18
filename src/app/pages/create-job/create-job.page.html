@@ -1,0 +1,320 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-icon (click)="goBack()" name="arrow-back-outline"></ion-icon>
+        <ion-title>Nueva oferta</ion-title>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="main">
+    <div class="gps" *ngIf="isSetGPSLocationPage">
+      <div id="map"></div>
+      <br><br>
+      <strong>Latitudd: </strong>{{latitude}} <br>
+      <strong>Longitud: </strong>{{longitude}} <br><br>
+      <button class="btn" (click)="selectNewLocalization()">
+        Seleccionar ubicación
+      </button>
+    </div>
+
+
+    <form *ngIf="!isSetGPSLocationPage" [formGroup]="createJobForm">
+    
+      
+               
+       
+     
+    
+ 
+   
+
+      <div class="overlay hidden" id="overlayCameraCreateJob"
+        (click)="closeModalPremiumGPS();closeNotificationModal();"></div>
+      <div class="overlay hidden" id="overlayErrorCreateJob" (click)="closeModalError();"></div>
+
+      <ion-item>
+        <ion-select (click)="clickSelect()" interface="popover" formControlName="professional_area" placeholder="Área laboral">
+          <ion-select-option id="select" *ngFor="let c of specializationAreaList" value={{c._id}}>{{c.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+
+      <div class="divError">
+        <span class="error" *ngIf="isSubmitted && errorControl.professional_area.errors?.required">
+          Área laboral requerida
+        </span>
+      </div>
+      <br />
+      <ion-item>
+        <ion-label position="floating">Nombre del puesto</ion-label>
+        <ion-input formControlName="job_name" type="text"></ion-input>
+      </ion-item>
+      <div class="divError">
+        <span class="error" *ngIf="isSubmitted && errorControl.job_name.errors?.required">
+          Nombre del puesto requerido
+        </span>
+      </div>
+      <br />
+
+      <ion-item>
+        <ion-label position="floating">Descripción</ion-label>
+        <ion-input formControlName="job_description" type="text"></ion-input>
+      </ion-item>
+      <div class="divError">
+        <span class="error" *ngIf="isSubmitted && errorControl.job_description.errors?.required">
+          Descripción requerida
+        </span>
+      </div>
+      <br />
+      <ion-item>
+        <ion-select formControlName="experience" interface="popover" placeholder="Años de experiencia">
+          <ion-select-option *ngFor="let y of yrsExperienceList" value={{y}}>{{y}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div class="divError">
+        <span class="error" *ngIf="isSubmitted && errorControl.experience.errors?.required">
+          Años de experiencia requerida
+        </span>
+      </div>
+      <br />
+      <ion-item>
+        <ion-label position="floating">Código identificador de la oferta</ion-label>
+        <ion-input formControlName="job_identifier" type="text"></ion-input>
+      </ion-item>
+      <div class="divError">
+        <span class="error" *ngIf="isSubmitted && errorControl.job_identifier.errors?.required">
+          Identificador requerido
+        </span>
+      </div>
+      <br />
+      <ion-item>
+        <ion-label position="floating">Conocimientos</ion-label>
+        <ion-input formControlName="knowledge" type="text"></ion-input>
+      </ion-item>
+      <div class="divError">
+        <span class="error" *ngIf="isSubmitted && errorControl.knowledge.errors?.required">
+          Conocimientos requeridos
+        </span>
+      </div>
+      <br />
+
+      <div class="btnSelect">
+        <div>
+          <p>Rango de sueldo</p>
+        </div>
+        <div class="btnOptions">
+          <button [ngClass]="{'selected': coinSelected === 'COLON'}" (click)="selectCoin('COLON')"
+            class="unselected">₡</button>
+          <button [ngClass]="{'selected': coinSelected === 'DOLAR'}" (click)="selectCoin('DOLAR')"
+            class="unselected">$</button>
+        </div>
+      </div>
+      <ion-item lines="none" class="remove_inner_bottom">
+        <ion-range [min]="minValueMoney" [max]="maxValueMoney" [step]="1" [(ngModel)]="salaryValue"
+          [ngModelOptions]="{standalone: true}" [snaps]="true">
+        </ion-range>
+      </ion-item>
+
+      <ul *ngIf="coinSelected === 'DOLAR'" class="tick-marks" style="margin-left: -10px;">
+        <li>1000</li>
+        <li>2000</li>
+        <li>4000</li>
+        <li>+</li>
+      </ul>
+      <ul *ngIf="coinSelected === 'COLON'" class="tick-marks" style="margin-left: -10px;">
+        <li>300.000</li>
+        <li>1.000.000</li>
+        <li>1.500.000</li>
+        <li>+</li>
+      </ul>
+      <br />
+
+      <div class="btnSelect">
+        <div>
+          <p>Ubicación basada en</p>
+        </div>
+        <div class="btnOptions localization">
+          <button style="font-size: 13px;" [ngClass]="{'selected': deviceLocalizationSelected === 'PHONE'}"
+            (click)="selectDeviceLocalization('PHONE')" class="unselected" id="deviceBtn">Dispositivo</button>
+          <button [ngClass]="{'selected': deviceLocalizationSelected === 'OTHER'}"
+            (click)="selectDeviceLocalization('OTHER')" class="unselected" id="otherBtn">Otra</button>
+        </div>
+      </div>
+      <div class="divError">
+        <span class="error" *ngIf="isSubmitted && deviceLocalizationSelected === ''">
+          Debe de seleccionar un método de ubicación.
+        </span>
+      </div>
+
+
+      <br />
+      <p id="textDistance">
+        Área de cobertura máxima según ubicación de los oferentes al puesto.
+      </p>
+
+      <div class="btnSelect">
+        <div>
+          <p>Rango Distancia</p>
+        </div>
+        <div class="btnOptions">
+          <button [ngClass]="{'selected': distanceMetricSelected === 'KM'}" (click)="selectDistanceMetric('KM')"
+            class="unselected">KM</button>
+          <button [ngClass]="{'selected': distanceMetricSelected === 'MI'}" (click)="selectDistanceMetric('MI')"
+            class="unselected">MI</button>
+        </div>
+      </div>
+      <ion-item lines="none" class="remove_inner_bottom">
+        <ion-range [min]="minValueDistance" [max]="maxValueDistance" [step]="1" [(ngModel)]="distanceValue"
+          [ngModelOptions]="{standalone: true}" [snaps]="true">
+        </ion-range>
+      </ion-item>
+      <ul *ngIf="distanceMetricSelected === 'KM'" class="tick-marks">
+        <li>5 km</li>
+        <li>10 km</li>
+        <li>25 km</li>
+        <li>50 km</li>
+      </ul>
+      <ul *ngIf="distanceMetricSelected === 'MI'" class="tick-marks">
+        <li>3.1 mi</li>
+        <li>6.2 mi</li>
+        <li>15.5 mi</li>
+        <li>31 mi</li>
+      </ul>
+              
+      <br />
+      <ion-item>
+        <ion-checkbox formControlName="ready_availability" slot="end"></ion-checkbox>
+        <ion-label>Disponibilidad inmediata</ion-label>
+      </ion-item>
+      <br />
+      <ion-item>
+        <ion-checkbox formControlName="work_from_home" slot="end"></ion-checkbox>
+        <ion-label>Ofrece teletrabajo</ion-label>
+      </ion-item>
+      <br />
+      <ion-item>
+        <ion-checkbox formControlName="travelAvailability" slot="end"></ion-checkbox>
+        <ion-label>Posibilidad de viajar</ion-label>
+      </ion-item>
+      <br />
+      <ion-item>
+        <ion-checkbox formControlName="require_criminal_record" slot="end"></ion-checkbox>
+        <ion-label>Solicitar hoja de delincuencia</ion-label>
+      </ion-item>
+      <br />
+      <ion-item>
+        <ion-checkbox formControlName="requires_license" slot="end"></ion-checkbox>
+        <ion-label>Solicitar licencia</ion-label>
+      </ion-item>
+      <br>
+
+
+      <section id="modalErrorCreateJob" class="modalError hidden">
+        <div>
+          <div class="closeIcon" (click)="closeModalError()">
+            <ion-icon name="close-outline"></ion-icon>
+            <div id="circle">
+              <span>X</span>
+            </div>
+          </div>
+          <br />
+          <div class="modalBody">
+            <h2>¡Error!</h2>
+            <!-- <p>Por favor intenta de nuevo más tarde</p> -->
+            <p>{{modalErrroBody}}</p>
+          </div>
+        </div>
+        <br />
+        <br />
+        <div id="divBtn">
+          <button class="btn" (click)="closeModalError()">
+            Volver a intentar
+          </button>
+        </div>
+        
+      </section>
+
+      <section id="modalCameraCreatejob" class="modalCamera hidden">
+        <div>
+          <div class="closeIcon" (click)="closeNotificationModal()">
+            <ion-icon name="close-outline"></ion-icon>
+          </div>
+          <div class="selectPhotoMode">
+            <br>
+            <img src="../../../assets/images/good_news.png" alt="">
+            <h4>Buenas noticias</h4>
+            <p>Oferta creada con éxito!</p>
+          </div>
+          <div id="divBtn">
+            <button (click)="goExplorePage()" class="btn">Ok, deseo explorar</button>
+          </div>
+        </div>
+        <br />
+      </section>
+
+      <section id="modalPremiumCreateJob" class="modalCVSent hidden">
+        <div>
+          <div class="closeIcon" (click)="closeModalPremiumGPS()">
+            <ion-icon name="close-outline"></ion-icon>
+          </div>
+          <div class="selectPhotoMode">
+            <br>
+            <img src="../../../assets/images/offer_apply_confirmation.png" alt="">
+            <br>
+            <h4>Necesitas Premium</h4>
+            <p>Si deseas realizar cambios en tu ubicación en tiempo real o situarte en cualquier lugar del mundo para
+              buscar empleo,
+              necesitas el Plan Premium</p>
+              
+            
+          </div>
+          <div id="divBtn">
+            <button (click)="goToPremiumPage()" class="btn">Obtener Plan Premium</button>
+          </div>
+        </div>
+        <br />
+      </section>
+
+    </form>
+    <ion-item *ngIf="!isSetGPSLocationPage">
+      <ion-select [(ngModel)]="otherLang" interface="popover" placeholder="Seleccione otros idiomas">
+        <ion-select-option *ngFor="let l of languageList" value={{l._id}}>{{l.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <br>
+    <button *ngIf="!isSetGPSLocationPage" [disabled]="otherLang === ''" (click)="addUserLanguage()"
+      id="addLanguageBtn">Agregar</button><br /><br />
+    <ion-radio-group *ngIf="!isSetGPSLocationPage && otherLang !== ''" [allowEmptySelection]="false"
+      [(ngModel)]="languageType" class="ClockSizes">
+      <ion-radio value="BASIC"></ion-radio>
+      <ion-label>Básico</ion-label>
+      <ion-radio value="INTERMEDIATE"></ion-radio>
+      <ion-label>Intermedio</ion-label>
+      <ion-radio value="ADVANCED"></ion-radio>
+      <ion-label>Avanzado</ion-label>
+    </ion-radio-group>
+    <br>
+    <div class="userGrades" *ngIf="listLanguageSelected.length > 0">
+      <hr>
+      <p>Idiomas</p>
+      <div *ngFor="let l of listLanguageSelected">
+        {{getLanguageName(l)}}
+        <button style="color: black;" (click)="removeUserLanguage(l.language)">X</button>
+      </div>
+    </div>
+    <br>
+    <br><br>
+
+    <button *ngIf="!isSetGPSLocationPage" id="createBtn" (click)="createJob()">Crear oferta</button><br /><br /><br /><br>
+  </div>
+  <ngx-loading [show]="isLoading" [config]="{
+    animationType: ngxLoadingAnimationTypes.circle,
+    primaryColour: primaryColour,
+    backdropBorderRadius: '3px',
+    fullScreenBackdrop:true
+  }"></ngx-loading>
+</ion-content>

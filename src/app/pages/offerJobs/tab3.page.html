@@ -1,0 +1,700 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon
+        *ngIf="isCandidateListPage  || isUpdateOfferPage || isUserInfoPage || isCalificateUserPage || isReportPage"
+        (click)="goBack()" name="arrow-back-outline"></ion-icon>
+      <ion-title> {{titleText}} </ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+
+
+<ion-content [fullscreen]="true">
+  <div class="main">
+
+    <section id="modalError" class="modalError hidden">
+      <div>
+        <div class="closeIcon" (click)="closeModalError()">
+          <ion-icon name="close-outline"></ion-icon>
+          <div id="circle">
+            <span>X</span>
+          </div>
+        </div>
+        <br />
+        <div class="modalBody">
+          <h2>¡Error!</h2>
+          <!-- <p>Por favor intenta de nuevo más tarde</p> -->
+          <p>{{modalErrroBody}}</p>
+        </div>
+      </div>
+      <br />
+      <br />
+      <div id="divBtn">
+        <button class="btn" (click)="closeModalError()">
+          Volver a intentar
+        </button>
+      </div>
+    </section>
+
+    <section id="modalCameraOfferList" class="modalCamera hidden">
+      <div>
+        <div class="closeIcon" (click)="closeNotificationModal()">
+          <ion-icon name="close-outline"></ion-icon>
+        </div>
+
+        <div *ngIf="isCalificateUserPage">
+          <div class="selectPhotoMode">
+            <br>
+            <img src="../../../assets/images/offer_apply_confirmation.png" alt="">
+            <h4>Calificación enviada</h4>
+            <p>gracias por calificar, tu opinión es de mucha ayuda para la comunidad de Stamp.</p>
+          </div>
+          <div id="divBtn">
+            <button (click)="goExplorePage()" class="btn">Ok</button>
+          </div>
+        </div>
+
+        <div *ngIf="isUsingMatch">
+          <div class="selectPhotoMode">
+            <br>
+            <img src="../../../assets/images/offer_apply_confirmation.png" alt="">
+            <h4>Buenas noticias</h4>
+            <p>Se envió una notificación a la persona interesada.</p>
+            <p>Pronto recibirá información del oferente si el está de acuerdo con facilitar dicha información.</p>
+          </div>
+          <div id="divBtn">
+            <button (click)="goExplorePage()" class="btn">Ok</button>
+          </div>
+        </div>
+
+
+        <div *ngIf="isUpdateOfferPage">
+          <div class="selectPhotoMode">
+            <br>
+            <img src="../../../assets/images/good_news.png" alt="">
+            <h4>Buenas noticias</h4>
+            <p>Oferta actualizada con éxito!</p>
+          </div>
+          <div id="divBtn">
+            <button (click)="goExplorePage()" class="btn">Ok, deseo explorar</button>
+          </div>
+        </div>
+      
+
+
+      <div *ngIf="isDelete">
+        <div class="selectPhotoMode">
+          <br>
+          <img src="../../../assets/images/deleteItem.png" alt="">
+          <h4>Eliminar oferta</h4>
+          <p>¿Está Seguro que desea eliminar esta oferta de manera permamente?</p>
+        </div>
+
+        <div id="divBtn3" >
+          <button (click)="closeNotificationModal()" class="btn3">Cancelar</button>
+        </div>
+        <br/>
+      
+        
+        <div id="divBtn4">
+          <button (click)="deleteOffer()" class="btn4">OK</button>
+        </div>
+      </div>
+    </div>
+      <br />
+    </section>
+
+    <section id="modalCameraOfferList" class="modalCamera hidden">
+      <div>
+        <div class="closeIcon" (click)="closeNotificationModal()">
+          <ion-icon name="close-outline"></ion-icon>
+        </div>
+
+        <div *ngIf="isCalificateUserPage">
+          <div class="selectPhotoMode">
+            <br>
+            <img src="../../../assets/images/offer_apply_confirmation.png" alt="">
+            <h4>Calificación enviada</h4>
+            <p>gracias por calificar, tu opinión es de mucha ayuda para la comunidad de Stamp.</p>
+          </div>
+          <div id="divBtn">
+            <button (click)="goExplorePage()" class="btn">Ok</button>
+          </div>
+        </div>
+
+        <div *ngIf="isUsingMatch">
+          <div class="selectPhotoMode">
+            <br>
+            <img src="../../../assets/images/offer_apply_confirmation.png" alt="">
+            <h4>Buenas noticias</h4>
+            <p>Se envió una notificación a la persona interesada.</p>
+            <p>Pronto recibirá información del oferente si el está de acuerdo con facilitar dicha información.</p>
+          </div>
+          <div id="divBtn">
+            <button (click)="goExplorePage()" class="btn">Ok</button>
+          </div>
+        </div>
+
+
+        <div *ngIf="isUpdateOfferPage">
+          <div class="selectPhotoMode">
+            <br>
+            <img src="../../../assets/images/good_news.png" alt="">
+            <h4>Buenas noticias</h4>
+            <p>Oferta actualizada con éxito!</p>
+          </div>
+          <div id="divBtn">
+            <button (click)="goExplorePage()" class="btn">Ok, deseo explorar</button>
+          </div>
+        </div>
+      </div>
+      <br />
+    </section>
+
+
+    <section id="modalPremiumOfferList" class="modalCVSent hidden">
+      <div>
+        <div class="closeIcon" (click)="closeModalPremiumGPS()">
+          <ion-icon name="close-outline"></ion-icon>
+        </div>
+        <div class="selectPhotoMode">
+          <br>
+          <img src="../../../assets/images/offer_apply_confirmation.png" alt="">
+          <br>
+          <h4>Necesitas Premium</h4>
+          <p>Si deseas realizar cambios en tu ubicación en tiempo real o situarte en cualquier lugar del mundo para
+            buscar empleo,
+            necesitas el Plan Premium</p>
+        </div>
+        <div id="divBtn">
+          <button (click)="goToPremiumPage()" class="btn">Obtener Plan Premium</button>
+        </div>
+      </div>
+      <br />
+    </section>
+
+    <div class="overlay hidden" id="overlayCameraOfferList" (click)="closeModalPremiumGPS();closeNotificationModal()">
+    </div>
+
+    <div class="overlay hidden" id="overlayError" (click)="closeModalError();"></div>
+    <div *ngIf="!isUpdateOfferPage">
+      <div *ngIf="offerList.length == 0" class="noOffers">
+        <p>Aún no hay ninguna oferta de empleo</p>
+        <div class="addOffer">
+          <button (click)="goCreateOfferPage()">
+            <ion-icon name="add-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+
+      <div
+        *ngIf="offerList.length > 0 && !isCandidateListPage && !isUserInfoPage && !isReportPage && !isCalificateUserPage">
+        <div *ngFor="let offer of offerList" class="ionListItem">
+          <ion-label (click)="clickMoreInfoOffer(offer)">
+            <p class="jobName">{{offer.job_name}}</p>
+            <p>Código de empleo: <span>{{offer.job_identifier}}</span> </p>
+            <p>Empresa: <span>{{offer.employer_EmpName}}</span> </p>
+            <p>Candidatos: <span>{{offer.likes}}</span> </p>
+          </ion-label>
+          <div class="optionsBtn">
+            <div style="display: flex;" (click)="clickMoreInfoOffer(offer)">
+              <div class="likeOptions">
+                <ion-icon name="thumbs-up-outline"></ion-icon>
+                <span>{{offer.likes}}</span>
+              </div>
+              <div class="likeOptions">
+                <ion-icon name="thumbs-down-outline"></ion-icon>
+                <span>{{offer.nolikes}}</span>
+              </div>
+            </div>
+
+            <div class="divSvg">
+              <svg (click)="editJobOffer(offer.job_id)" class="svg-icon" viewBox="0 0 20 23">
+                <path fill="gray"
+                  d="M14.06,9.02l0.92,0.92L5.92,19L5,19v-0.92l9.06,-9.06M17.66,3c-0.25,0 -0.51,0.1 -0.7,0.29l-1.83,1.83 3.75,3.75 1.83,-1.83c0.39,-0.39 0.39,-1.02 0,-1.41l-2.34,-2.34c-0.2,-0.2 -0.45,-0.29 -0.71,-0.29zM14.06,6.19L3,17.25L3,21h3.75L17.81,9.94l-3.75,-3.75z" />
+                />
+              </svg>
+
+              <svg (click)="deleteJobOffer(offer.job_id)" class="svg-icon" viewBox="0 0 20 23">
+                <path fill="gray"
+                  d="M16,9v10H8V9h8m-1.5,-6h-5l-1,1H5v2h14V4h-3.5l-1,-1zM18,7H6v12c0,1.1 0.9,2 2,2h8c1.1,0 2,-0.9 2,-2V7z" />
+                />
+              </svg>
+            </div>
+          </div>
+          <br>
+          <hr>
+          <br>
+        </div>
+        <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+          <ion-fab-button (click)="goCreateOfferPage()">
+            <ion-icon name="add"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+      </div>
+
+      <span style="visibility: hidden;"> {{isCandidateListPage}}</span>
+
+      <div class="candidateList"
+        *ngIf="isCandidateListPage && !isUserInfoPage && !isCalificateUserPage && !isUserInfoPage && !isReportPage">
+        <ion-segment value="default">
+          <ion-segment-button (click)="selectTabNew()" value="default">
+            <ion-label>Nuevos</ion-label>
+          </ion-segment-button>
+          <ion-segment-button (click)="selectTabNotified()" value="segment">
+            <ion-label>Notificados</ion-label>
+          </ion-segment-button>
+          <ion-segment-button (click)="selectTabDiscarded()" value="segmen2">
+            <ion-label>Descartados</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <br><br>
+        <div class="ionListItem">
+          <ion-label>
+            <p class="jobName">{{candidatesList.job.job_name}}</p>
+            <p>Código de empleo: <span>{{candidatesList.job.job_identifier}}</span> </p>
+            <p>Candidatos: <span>0</span> </p>
+          </ion-label>
+          <hr>
+          <br>
+
+          <div class="noData"
+            *ngIf="candidatesListSelected.length == 0 && !isUserInfoPage && !isCalificateUserPage && !isUserInfoPage  && !isReportPage">
+            <label>{{noCandidatesText}}</label>
+          </div>
+
+          <div *ngIf="candidatesListSelected.length > 0 && !isUserInfoPage && !isCalificateUserPage">
+            <div *ngFor="let candidate of candidatesListSelected" class="ionListItem">
+              <ion-label (click)="showInfoUser(candidate)">
+                <p class="name">{{candidate.user.name}} {{candidate.user.last_name}} </p>
+                <p>{{candidate.user.professional_area.name}} </p>
+              </ion-label>
+              <div>
+                <div class="optionsBtn likesCandidate">
+                  <div style="display: flex;justify-content: end;">
+                    <div (click)="matchCandidate('MATCH', candidate)" class="likeOptions">
+                      <ion-icon name="thumbs-up-outline"></ion-icon>
+                    </div>
+                    <div (click)="matchCandidate('NOMATCH', candidate)" class="likeOptions">
+                      <ion-icon name="thumbs-down-outline"></ion-icon>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="matchesData" (click)="showInfoUser(candidate)">
+                <div class="divSvg">
+                  <svg class="svg-icon" viewBox="0 0 20 20">
+                    <path fill="gray" d="M9,16.17L4.83,12l-1.42,1.41L9,19 21,7l-1.41,-1.41z" />
+                    />
+                  </svg>
+                </div>
+                <br>
+                <span *ngIf="candidate.salaryMatch">Pretención Salarial</span><br>
+                <span *ngIf="candidate.gradeMatch">Experiencia académica</span><br>
+                <span *ngIf="candidate.locationMatch">Zona</span><br>
+                <!-- <span>Teletrabajo</span><br> -->
+              </div>
+              <div *ngIf="candidate.matchPercentage == 100" class="div100_match">
+                <br>
+                <label>100% COINCIDENCIA CON PUESTO</label>
+              </div>
+              <hr>
+              <br>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+    <div *ngIf="isUpdateOfferPage && !isUserInfoPage && !isCalificateUserPage && !isUserInfoPage">
+
+      <div class="gps" *ngIf="isSetGPSLocationPage">
+        <div id="map"></div>
+        <br><br>
+        <strong>Latitudd: </strong>{{latitude}} <br>
+        <strong>Longitud: </strong>{{longitude}} <br><br>
+        <button class="btn" (click)="selectNewLocalization()">
+          Seleccionar ubicación
+        </button>
+      </div>
+
+
+
+
+      <form *ngIf="!isSetGPSLocationPage" [formGroup]="editJobForm">
+
+
+        
+        <ion-item>
+          <ion-select (click)="clickSelect()" interface="popover" formControlName="professional_area" placeholder="Área laboral">
+            <ion-select-option *ngFor="let c of specializationAreaList" value={{c._id}}>{{c.name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && errorControl.professional_area.errors?.required">
+            Área laboral requerida
+          </span>
+        </div>
+        <br />
+        <ion-item>
+          <ion-label position="floating">Nombre del puesto</ion-label>
+          <ion-input formControlName="job_name" type="text"></ion-input>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && errorControl.job_name.errors?.required">
+            Nombre del puesto requerido
+          </span>
+        </div>
+        <br />
+
+        <ion-item>
+          <ion-label position="floating">Descripción</ion-label>
+          <ion-input formControlName="job_description" type="text"></ion-input>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && errorControl.job_description.errors?.required">
+            Descripción requerida
+          </span>
+        </div>
+        <br />
+        <ion-item>
+          <ion-select formControlName="experience" interface="popover" placeholder="Años de experiencia">
+            <ion-select-option *ngFor="let y of yrsExperienceList" value={{y}}>{{y}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && errorControl.experience.errors?.required">
+            Años de experiencia requerida
+          </span>
+        </div>
+        <br />
+        <ion-item>
+          <ion-label position="floating">Código identificador de la oferta</ion-label>
+          <ion-input formControlName="job_identifier" type="text"></ion-input>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && errorControl.job_identifier.errors?.required">
+            Identificador requerido
+          </span>
+        </div>
+        <br />
+        <ion-item>
+          <ion-label position="floating">Conocimientos</ion-label>
+          <ion-input formControlName="knowledge" type="text"></ion-input>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && errorControl.knowledge.errors?.required">
+            Conocimientos requeridos
+          </span>
+        </div>
+        <br />
+
+        <div class="btnSelect">
+          <div>
+            <p>Rango de sueldo</p>
+          </div>
+          <div class="btnOptions">
+            <button [ngClass]="{'selected': coinSelected == 'COLON'}" (click)="selectCoin('COLON')"
+              class="unselected">₡</button>
+            <button [ngClass]="{'selected': coinSelected === 'USD'}" (click)="selectCoin('USD')"
+              class="unselected">$</button>
+          </div>
+        </div>
+        <ion-item lines="none" class="remove_inner_bottom">
+          <ion-range [min]="minValueMoney" [max]="maxValueMoney" [step]="1" [(ngModel)]="salaryValue"
+            [ngModelOptions]="{standalone: true}" [snaps]="true">
+          </ion-range>
+        </ion-item>
+        <ul *ngIf="coinSelected === 'USD'" class="tick-marks" style="margin-left: -10px;">
+          <li>1000</li>
+          <li>2000</li>
+          <li>4000</li>
+          <li>+</li>
+        </ul>
+        <ul *ngIf="coinSelected === 'COLON'" class="tick-marks" style="margin-left: -10px;">
+          <li>300.000</li>
+          <li>1.000.000</li>
+          <li>1.500.000</li>
+          <li>+</li>
+        </ul>
+        <br />
+
+        <div class="btnSelect">
+          <div>
+            <p>Ubicación basada en</p>
+          </div>
+          <div class="btnOptions localization">
+            <button style="font-size: 13px;" [ngClass]="{'selected': deviceLocalizationSelected === 'PHONE'}"
+              (click)="selectDeviceLocalization('PHONE')" class="unselected" id="deviceBtn">Dispositivo</button>
+            <button [ngClass]="{'selected': deviceLocalizationSelected === 'OTHER'}"
+              (click)="selectDeviceLocalization('OTHER')" class="unselected" id="otherBtn">Otra</button>
+          </div>
+        </div>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && deviceLocalizationSelected === ''">
+            Debe de seleccionar un método de ubicación.
+          </span>
+        </div>
+
+        <br />
+        <p id="textDistance">
+          Área de cobertura máxima según ubicación de los oferentes al puesto.
+        </p>
+
+        <div class="btnSelect">
+          <div>
+            <p>Rango Distancia</p>
+          </div>
+          <div class="btnOptions">
+            <button [ngClass]="{'selected': distanceMetricSelected === 'KM'}" (click)="selectDistanceMetric('KM')"
+              class="unselected">KM</button>
+            <button [ngClass]="{'selected': distanceMetricSelected === 'MI'}" (click)="selectDistanceMetric('MI')"
+              class="unselected">MI</button>
+          </div>
+        </div>
+
+        <ion-item lines="none" class="remove_inner_bottom">
+          <ion-range [min]="minValueDistance" [max]="maxValueDistance" [step]="1" [(ngModel)]="distanceValue"
+            [ngModelOptions]="{standalone: true}" [snaps]="true">
+          </ion-range>
+        </ion-item>
+        <ul *ngIf="distanceMetricSelected === 'KM'" class="tick-marks">
+          <li>5 km</li>
+          <li>10 km</li>
+          <li>25 km</li>
+          <li>50 km</li>
+        </ul>
+        <ul *ngIf="distanceMetricSelected === 'MI'" class="tick-marks">
+          <li>3.1 mi</li>
+          <li>6.2 mi</li>
+          <li>15.5 mi</li>
+          <li>31 mi</li>
+        </ul>
+        <br />
+        <ion-item>
+          <ion-checkbox formControlName="ready_availability" slot="end"></ion-checkbox>
+          <ion-label>Disponibilidad inmediata</ion-label>
+        </ion-item>
+        <br />
+        <ion-item>
+          <ion-checkbox formControlName="work_from_home" slot="end"></ion-checkbox>
+          <ion-label>Ofrece teletrabajo</ion-label>
+        </ion-item>
+        <br />
+        <ion-item>
+          <ion-checkbox formControlName="travelAvailability" slot="end"></ion-checkbox>
+          <ion-label>Posibilidad de viajar</ion-label>
+        </ion-item>
+        <br />
+        <ion-item>
+          <ion-checkbox formControlName="require_criminal_record" slot="end"></ion-checkbox>
+          <ion-label>Solicitar hoja de delincuencia</ion-label>
+        </ion-item>
+        <br />
+        <ion-item>
+          <ion-checkbox formControlName="requires_license" slot="end"></ion-checkbox>
+          <ion-label>Solicitar licencia</ion-label>
+        </ion-item>
+        <br>
+      </form>
+      <ion-item *ngIf="!isSetGPSLocationPage">
+        <ion-select [(ngModel)]="otherLang" interface="popover" placeholder="Seleccione otros idiomas">
+          <ion-select-option *ngFor="let l of languageList" value={{l._id}}>{{l.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <br>
+      <button *ngIf="!isSetGPSLocationPage" [disabled]="otherLang == ''" (click)="addUserLanguage()"
+        id="addLanguageBtn">Agregar</button><br /><br />
+      <ion-radio-group *ngIf="!isSetGPSLocationPage && otherLang != ''" [allowEmptySelection]="false"
+        [(ngModel)]="languageType" class="ClockSizes">
+        <ion-radio value="BASIC"></ion-radio>
+        <ion-label>Básico</ion-label>
+        <ion-radio value="INTERMEDIATE"></ion-radio>
+        <ion-label>Intermedio</ion-label>
+        <ion-radio value="ADVANCED"></ion-radio>
+        <ion-label>Avanzado</ion-label>
+      </ion-radio-group>
+      <br>
+      <div class="userGrades" *ngIf="listLanguageSelected.length > 0 && !isSetGPSLocationPage">
+        <hr>
+        <p>Idiomas</p>
+        <div *ngFor="let l of listLanguageSelected">
+          {{getLanguageName(l)}}
+          <button style="color: black;" (click)="removeUserLanguage(l.language)">X</button>
+        </div>
+        <br>
+      </div>
+      <br>
+      <br>
+      <br><br>
+      <button *ngIf="!isSetGPSLocationPage" class="updateBtn" (click)="updateJobOffer()">Finalizar</button><br /><br />
+    </div>
+
+    <div class="userInfoPage" *ngIf="isUserInfoPage">
+      <div class="custom-w">
+        <h4 class="mb-0">{{currentCandidate.user.name}}</h4>
+        <p class="p-color mt-0 mb-10">{{currentCandidate.user.email}}</p>
+      </div>
+
+      <form [formGroup]="form">
+        <div class="custom-rating-div">
+          <div>
+            <ngx-star-rating formControlName="rating" [id]="'rating'"></ngx-star-rating>
+          </div>
+          <ion-button class="ml-10 custom-btn-report" shape="round" (click)="report()"
+            color="report">Denunciar</ion-button>
+        </div>
+      </form>
+
+      <div class="custom-w">
+        <p class="p-color f-size-18 mb-7 bolder">Área Laboral</p>
+        <p class="p-color mt-0">{{currentCandidate.user.professional_area.name}}</p>
+
+        <!-- INFO NO OBTENIDA POR API -->
+        <!-- <p class="p-color f-size-18 mb-7">Grado Académico</p>
+        <p class="p-color mt-0">Bachillerato</p> -->
+
+        <!-- <p class="p-color f-size-18 mb-7">Trabajos Anteriores</p>
+        <p class="p-color mt-0 mb-0">RJ & Asociados</p>
+        <p class="p-color mt-0">Búsqueda efectiva de personal</p>
+    
+        <p class="p-color f-size-18 mb-7">Experiencia Laboral</p>
+        <p class="p-color mt-0">3 años</p>
+    
+        <p class="p-color f-size-18 mb-7">Idioma</p>
+        <p class="p-color mt-0 mb-0">Nativo: Español</p>
+        <p class="p-color mt-0">Otros idiomas: Inglés - Frances</p>
+    
+        <p class="p-color f-size-18 mb-7">Comentarios Obtenidos</p>
+        <p class="p-color mt-0 mb-0">Persona profesional que se adapta en entornos corporativos y que realiza
+          sus funciones de manera oportuna y eficiente.</p>
+    
+        <div class="comment-border"></div>
+        <p class="p-color mt-0 mb-0">Persona proactiva que trabaje en equipo capaz de trabajar en cualquier entorno
+          corporativo.</p> -->
+
+      </div>
+
+      <div>
+        <div class="optionsBtn likesCandidate">
+          <div style="display: flex;justify-content: center;">
+            <div (click)="matchCandidate('MATCH', currentCandidate)" class="likeOptions">
+              <ion-icon name="thumbs-up-outline"></ion-icon>
+            </div>
+            <div (click)="matchCandidate('NOMATCH', currentCandidate)" class="likeOptions">
+              <ion-icon name="thumbs-down-outline"></ion-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="txt-center div-btn-m">
+        <button class="custom-btn" (click)="calificateUsePage()">Calificar</button>
+      </div>
+    </div>
+
+
+
+
+    <div class="calificateUserPage" *ngIf="isCalificateUserPage">
+      <div class="calification">
+        <div class="custom-w">
+          <h4>{{currentCandidate.user.name}}</h4>
+        </div>
+        <br>
+
+
+        <form [formGroup]="ratingForm">
+          <ion-item-divider>
+            <p class="f-size-18">Habilidad</p>
+            <ngx-star-rating formControlName="rating1" [id]="'rating1'"></ngx-star-rating>
+          </ion-item-divider>
+
+          <ion-item-divider>
+            <p class="f-size-18">Presentación</p>
+            <ngx-star-rating formControlName="rating2" [id]="'rating2'"></ngx-star-rating>
+          </ion-item-divider>
+
+          <ion-item-divider>
+            <p class="f-size-18">Puntualidad</p>
+            <ngx-star-rating formControlName="rating3" [id]="'rating3'"></ngx-star-rating>
+          </ion-item-divider>
+
+          <ion-item-divider>
+            <p class="f-size-18">Disciplina</p>
+            <ngx-star-rating formControlName="rating4" [id]="'rating4'"></ngx-star-rating>
+          </ion-item-divider>
+          <br>
+          <ion-item-divider>
+
+            <p class="f-size-18">Observaciones</p>
+            <ion-item>
+              <ion-input position="floating" placeholder="Indique alguna observación" formControlName="inputData"
+                type="text"></ion-input>
+            </ion-item>
+
+          </ion-item-divider>
+        </form>
+
+        <div class="divError">
+          <span class="error" *ngIf="incompletedFields">
+            Debe de selecionar al menos una valor para cada sección.
+          </span>
+        </div>
+
+        <div class="txt-center div-btn-m">
+          <button (click)="sendCalification()">Enviar Calificación</button>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="reportPage" *ngIf="isReportPage">
+      <form [formGroup]="reportForm">
+        <p>Motivo</p>
+        <br>
+        <ion-item>
+          <ion-input placeholder="Escriba el motivo para denunciar" formControlName="complaint" type="text"></ion-input>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && error.complaint.errors?.required">
+            Motivo de la denuncia es requerida
+          </span>
+        </div>
+      </form>
+      <br>
+      <ion-button class="ml-10 custom-btn-report" shape="round" color="report"
+        (click)="doReport()">Denunciar</ion-button>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  <ngx-loading [show]="isLoading" [config]="{
+    animationType: ngxLoadingAnimationTypes.circle,
+    primaryColour: primaryColour,
+    backdropBorderRadius: '3px',
+    fullScreenBackdrop:true
+  }"></ngx-loading>
+
+</ion-content>

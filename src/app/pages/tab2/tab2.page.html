@@ -1,0 +1,286 @@
+<ion-header>
+  
+    <ion-toolbar>
+      <ion-buttons>
+        <ion-icon *ngIf="isCalificateEmployerPage || isReportPage || isInfoEmployerPage" (click)="goBack()"
+          name="arrow-back-outline"></ion-icon>
+        <ion-title>{{titleText}}</ion-title>
+      </ion-buttons>
+    
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div class="main">
+
+    <section id="modalErrorUserOffer" class="modalError hidden">
+      <div>
+        <div class="closeIcon" (click)="closeModalError()">
+          <ion-icon name="close-outline"></ion-icon>
+          <div id="circle">
+            <span>X</span>
+          </div>
+        </div>
+        <br />
+        <div class="modalBody">
+          <h2>¡Error!</h2>
+          <!-- <p>Por favor intenta de nuevo más tarde</p> -->
+          <p>{{modalErrroBody}}</p>
+        </div>
+      </div>
+      <br />
+      <br />
+      <div id="divBtn">
+        <button class="btn" (click)="closeModalError()">
+          Volver a intentar
+        </button>
+      </div>
+    </section>
+    <div class="overlay hidden" id="overlayErrorUserOffer" (click)="closeModalError();"></div>
+    <section id="modalUserOffer" class="modalCamera hidden">
+      <div>
+        <div class="closeIcon" (click)="closeNotificationModal()">
+          <ion-icon name="close-outline"></ion-icon>
+        </div>
+        <div class="selectPhotoMode">
+          <br>
+          <div *ngIf="isCalificateEmployerPage">
+            <img src="../../../assets/images/offer_apply_confirmation.png" alt="">
+            <h4>Calificación enviada</h4>
+            <p>Gracias por calificar, tu opnión es de mucha ayuda para la comunidad de Stamp</p>
+          </div>
+          <div *ngIf="!isCalificateEmployerPage">
+            <img src="../../../assets/images/offer_apply_confirmation.png" alt="">
+            <h4>Buenas noticias</h4>
+            <p>Ya eres uno de los candidatos para participar en la selección de esta oferta de empleo.</p>
+            <p>Pronto recibirás notificaciones de dicho proceso.</p>
+          </div>
+
+        </div>
+        <div id="divBtn">
+          <button (click)="closeNotificationModal()" class="btn">Ok</button>
+        </div>
+      </div>
+      <br />
+    </section>
+
+
+    <div class="overlay hidden" id="overlayUserOffer" (click)="closeNotificationModal();"></div>
+
+    <div class="noOffers" *ngIf="offerList.length === 0 && !isInfoEmployerPage">
+      <p>No hay ofertas disponibles</p>
+    </div>
+
+    <div *ngIf="offerList.length > 0 && !isCalificateEmployerPage && !isInfoEmployerPage && !isReportPage">
+      <br>
+      <div>
+        <div *ngIf="currentOffer.data.adData && !isPremium">
+          <div class="custom-w advertising">
+            <div class="closeIcon" (click)="nextOffer()">
+              <ion-icon name="close-outline"></ion-icon>
+              <br>
+            </div>
+            <h4>{{currentOffer.data.adData.title}}</h4><br>
+            <img src={{getImgURl(currentOffer.data.adData.image)}} alt="" srcset="">
+            <br><br><br><br>
+            <div id="divBtn">
+              <button (click)="goToUrl(currentOffer.data.adData.link)" class="btn">Ir</button>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="!currentOffer.data.adData">
+          <div class="custom-w ">
+            <h4>{{currentOffer.data.job_name}}</h4>
+            <!-- <ion-icon class="btn-icon-share" (click)="share()" name="arrow-redo-outline" color="app"></ion-icon> -->
+            <div style="display: flex;">
+              <p class="p-color mt-10 mb-10"><strong>Empresa: </strong>{{currentOffer.data.employer.name}}</p>
+              <img src="../../../assets/images/info.png" width="40" height="40" (click)="openInfo()">
+            </div>
+          </div>
+          
+
+          <div class="divOfferRating">
+            <form [formGroup]="form">
+              <div class="custom-rating-div">
+                <ngx-star-rating formControlName="rating" [id]="'rating'"></ngx-star-rating>
+              </div>
+            </form>
+          </div>
+          
+          <br>
+          <div class="custom-w">
+            <p *ngIf="currentOffer.data.job_location.name !== ''" class="p-color mb-7"><strong>Localización:</strong>
+              {{currentOffer.data.job_location.name}}</p>
+            <p class="p-color mb-7 mt-0"><strong>Publicado:
+              </strong>{{getPublicationDate(currentOffer.data.creation_date)}}
+            </p>
+            <p class="p-color mt-0"><strong>Salario: </strong>{{currentOffer.data.salaryCurrency}} 
+              {{currentOffer.data.salary}}</p>
+
+            <p class="p-color f-size-18 mb-7"><strong>Descripción</strong></p>
+            <p class="p-color mt-0">{{currentOffer.data.job_description}}</p>
+
+            <p class="p-color f-size-18 mb-7"> <strong>Requisitos</strong></p>
+            <p *ngIf="currentOffer.data.experience !== undefined" class="p-color mb-0 mt-0 bolderTitle">Años de
+              experiencia: <span>{{currentOffer.data.experience}}</span></p>
+            <p *ngIf="currentOffer.data.languages.length > 0" class="p-color mb-0 mt-0 bolderTitle">Idiomas:
+              <span>{{getLanguagesList()}}</span>
+            </p>
+            <p *ngIf="currentOffer.data.knowledge" class="p-color mb-0 mt-0 bolderTitle">Conocimientos:
+              <span>{{currentOffer.data.knowledge}}</span>
+            </p>
+            <br>
+            <p *ngIf="currentOffer.data.requires_license !== undefined" class="p-color mb-0 mt-0"><strong>Requiere
+                licencia: </strong>
+              <span *ngIf="currentOffer.data.requires_license">Si</span>
+              <span *ngIf="!currentOffer.data.requires_license">No</span>
+            </p>
+            <p *ngIf="currentOffer.data.require_criminal_record != undefined" class="p-color mt-0"><strong>Requiere hoja
+                de delicuencia: </strong>
+              <span *ngIf="currentOffer.data.require_criminal_record">Si</span>
+              <span *ngIf="!currentOffer.data.require_criminal_record">No</span>
+            </p>
+            <p *ngIf="currentOffer.data.travelAvailability != undefined" class="p-color mb-0 mt-0">
+              <strong>Disponibilidad de Viajar: </strong>
+              <span *ngIf="currentOffer.data.travelAvailability">Si</span>
+              <span *ngIf="!currentOffer.data.travelAvailability">No</span>
+            </p>
+          </div>
+
+          <div class="txt-center div-btn-m">
+            <ion-button shape="round" fill="outline" color="app"
+              (click)="likejobOffer(currentOffer.data)">Aplicar</ion-button>
+            <ion-button shape="round" fill="outline" color="app" (click)="noLikeJobOffer(currentOffer.data)">No me
+              interesa</ion-button>
+          </div>
+        </div>
+        <br>
+      </div>
+    </div>
+
+    <div *ngIf="isCalificateEmployerPage">
+      <div class="calification">
+        <div class="custom-w">
+          <h4>{{currentOffer.data.employer.name}}</h4>
+        </div>
+        <br>
+
+        <form [formGroup]="ratingForm">
+          <ion-item-divider>
+            <p class="f-size-18">Profesionalismo</p>
+            <ngx-star-rating formControlName="rating" [id]="'rating7'"></ngx-star-rating>
+          </ion-item-divider>
+
+          <ion-item-divider>
+            <p class="f-size-18">Instalaciones</p>
+            <ngx-star-rating formControlName="rating2" [id]="'rating8'"></ngx-star-rating>
+          </ion-item-divider>
+
+          <ion-item-divider>
+            <p class="f-size-18">Beneficios</p>
+            <ngx-star-rating formControlName="rating3" [id]="'rating9'"></ngx-star-rating>
+          </ion-item-divider>
+
+          <ion-item-divider>
+            <p class="f-size-18">Manejo de Personal</p>
+            <ngx-star-rating formControlName="rating4" [id]="'rating10'"></ngx-star-rating>
+          </ion-item-divider>
+
+          <ion-item-divider>
+            <p class="f-size-18">Competitividad</p>
+            <ngx-star-rating formControlName="rating5" [id]="'rating11'"></ngx-star-rating>
+          </ion-item-divider>
+          <br>
+          <ion-item-divider>
+
+            <p class="f-size-18">Observaciones</p>
+            <ion-item>
+              <ion-input position="floating" placeholder="Indique alguna observación o comentario"
+                formControlName="inputData" type="text"></ion-input>
+            </ion-item>
+
+          </ion-item-divider>
+        </form>
+
+        <div class="divError">
+          <span class="error" *ngIf="incompletedFields">
+            Debe de selecionar al menos una valor para cada sección.
+          </span>
+        </div>
+
+        <div class="txt-center div-btn-m">
+          <button (click)="sendCalification()">Enviar Calificación</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="employerInfo" *ngIf="isInfoEmployerPage  && !isCalificateEmployerPage">
+      <div class="custom-w">
+        <h4 class="mb-0">{{currentOffer.data.employer.name}}</h4>
+      </div>
+
+      <div class="custom-w">
+        <p *ngIf="currentOffer.data.job_location.name !== ''" class="p-color f-size-18 mb-7 bolder">
+          Localización: <span class="p-color mt-0 mb-0">{{currentOffer.data.job_location.name}}</span></p>
+      </div>
+
+      <form [formGroup]="form" >
+        <div class="custom-rating-div">
+          <div (click)="calificar()">
+            <ngx-star-rating formControlName="rating" [id]="'rating'"></ngx-star-rating>
+          </div>
+          <ion-button class="ml-10 custom-btn-report" shape="round" color="report"
+            (click)="report()">Denunciar</ion-button>
+        </div>
+      </form>
+
+      <div class="custom-w">
+        <p class="p-color f-size-18 mb-7 bolder">Descripción</p>
+        <p class="p-color mt-0 mb-0">{{currentOffer.data.employer.description}}</p>
+
+        <div class="comment-border"></div>
+        <div *ngIf="currentOffer.data.employer.photo" class="imgEmployer">
+          <img src={{getImgURl(currentOffer.data.employer.photo._id)}} alt="" srcset="">
+        </div>
+        <br>
+        <div *ngIf="currentOffer.data.employer.email" class="emailInfo">
+          <ion-icon name="mail-outline"></ion-icon>
+          <span class="p-color mt-0 mb-0">{{currentOffer.data.employer.email}}</span>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="reportPage" *ngIf="isReportPage">
+      <form [formGroup]="reportForm">
+        <p>Motivo</p>
+        <br>
+        <ion-item>
+          <ion-input placeholder="Escriba el motivo para denunciar" formControlName="complaint" type="text"></ion-input>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && error.complaint.errors?.required">
+            Motivo de la denuncia es requerida
+          </span>
+        </div>
+      </form>
+      <br>
+      <ion-button class="ml-10 custom-btn-report" shape="round" color="report"
+        (click)="doReport()">Denunciar</ion-button>
+    </div>
+
+
+  </div>
+
+
+  <ngx-loading [show]="isLoading" [config]="{
+    animationType: ngxLoadingAnimationTypes.circle,
+    primaryColour: primaryColour,
+    backdropBorderRadius: '3px',
+    fullScreenBackdrop:true
+  }"></ngx-loading>
+
+</ion-content>

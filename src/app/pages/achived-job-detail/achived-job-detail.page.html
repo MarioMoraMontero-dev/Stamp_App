@@ -1,0 +1,94 @@
+<ion-header>
+
+
+  <ion-toolbar>
+    <ion-buttons  slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title slot="start">Detalle de la posición</ion-title>
+  </ion-toolbar>
+  
+ 
+</ion-header>
+
+<ion-content>
+
+   <h4></h4>
+      
+      
+
+
+      <div *ngIf="currentOffer !== undefined">
+        <div class="custom-w ">
+          <h4>{{currentOffer.data.job_name}}</h4>
+          <!-- <ion-icon class="btn-icon-share" (click)="share()" name="arrow-redo-outline" color="app"></ion-icon> -->
+          <div style="display: flex;">
+            <!-- <p class="p-color mt-10 mb-10"><strong>Empresa: </strong>{{currentOffer.data.job.employer.name}}</p> -->
+            <!-- <img src="../../../assets/images/info.png" width="40" height="40"> -->
+          </div>
+        </div>
+
+        <div class="divOfferRating">
+          <!-- <form >
+            <div class="custom-rating-div">
+             // <ngx-star-rating formControlName="rating" [id]="'rating'"></ngx-star-rating>
+            </div>
+          </form> -->
+        </div>
+        
+        <br>
+        <div class="custom-w">
+          <p  class="p-color mb-7"><strong>Empresa:</strong>
+            {{currentOffer.data.employer.name}}</p>
+            <br>
+            
+          <p  class="p-color mb-7"><strong>Localización:</strong>
+           {{currentOffer.data.job_location.name}}</p>
+           <br>
+          <p class="p-color mb-7 mt-0"><strong>Publicado:
+            </strong>{{getPublicationDate(currentOffer.data.creation_date)}}
+          </p>
+          <br>
+          <p class="p-color mt-0"><strong>Salario: </strong>{{currentOffer.data.salaryCurrency}} {{currentOffer.data.salary}}</p>
+          
+          <p class="p-color f-size-18 mb-7"><strong>Descripción</strong></p>
+          <p class="p-color mt-0">{{currentOffer.data.job_description}}</p>
+          
+          <p class="p-color f-size-18 mb-7"> <strong>Requisitos</strong></p>
+          <br>
+          <p  class="p-color mb-0 mt-0 bolderTitle">Años de
+            experiencia: <span>{{currentOffer.data.experience}}</span></p>
+            <br>
+          <p class="p-color mb-0 mt-0 bolderTitle">Idiomas:
+            <span *ngFor="let l of currentOffer.data.languages">{{l.language.name}}</span>
+          </p>
+          <br>
+          <p class="p-color mb-0 mt-0 bolderTitle">Conocimientos:
+            <span>{{currentOffer.data.knowledge}}</span>
+          </p>
+          <br>
+          <p class="p-color mb-0 mt-0"><strong>Requiere
+              licencia: </strong>
+            <span *ngIf="currentOffer.data.requires_license">Si</span>
+            <span *ngIf="!currentOffer.data.requires_license">No</span> 
+          </p>
+          <br>
+          <p class="p-color mt-0"><strong>Requiere hoja
+              de delicuencia: </strong>
+            <span *ngIf="currentOffer.data.require_criminal_record">Si</span>
+            <span *ngIf="!currentOffer.data.require_criminal_record">No</span>
+          </p>
+          <br>
+          <p class="p-color mb-0 mt-0">
+            <strong>Disponibilidad de Viajar: </strong>
+           
+            <span *ngIf="currentOffer.data.travelAvailability">Si</span>
+            <span *ngIf="!currentOffer.data.travelAvailability">No</span>
+          </p>
+        </div>
+
+       
+      </div>
+  
+
+</ion-content>

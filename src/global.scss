@@ -1,0 +1,178 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+
+/* Colors */
+:root {
+	--ion-color-report: #0c5a8b;
+	--ion-color-report-rgb: 12,90,139;
+	--ion-color-report-contrast: #ffffff;
+	--ion-color-report-contrast-rgb: 255,255,255;
+	--ion-color-report-shade: #0b4f7a;
+	--ion-color-report-tint: #246b97;
+}
+
+:root {
+	--ion-color-app: #00a19a;
+	--ion-color-app-rgb: 0,161,154;
+	--ion-color-app-contrast: #ffffff;
+	--ion-color-app-contrast-rgb: 255,255,255;
+	--ion-color-app-shade: #008e88;
+	--ion-color-app-tint: #1aaaa4;
+}
+
+:root {
+	--ion-color-dgray: #555555;
+	--ion-color-dgray-rgb: 85,85,85;
+	--ion-color-dgray-contrast: #ffffff;
+	--ion-color-dgray-contrast-rgb: 255,255,255;
+	--ion-color-dgray-shade: #4b4b4b;
+	--ion-color-dgray-tint: #666666;
+}
+
+.ion-color-dgray {
+	--ion-color-base: var(--ion-color-dgray);
+	--ion-color-base-rgb: var(--ion-color-dgray-rgb);
+	--ion-color-contrast: var(--ion-color-dgray-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-dgray-contrast-rgb);
+	--ion-color-shade: var(--ion-color-dgray-shade);
+	--ion-color-tint: var(--ion-color-dgray-tint);
+}
+
+.ion-color-report {
+	--ion-color-base: var(--ion-color-report);
+	--ion-color-base-rgb: var(--ion-color-report-rgb);
+	--ion-color-contrast: var(--ion-color-report-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-report-contrast-rgb);
+	--ion-color-shade: var(--ion-color-report-shade);
+	--ion-color-tint: var(--ion-color-report-tint);
+}
+
+.ion-color-app {
+	--ion-color-base: var(--ion-color-app);
+	--ion-color-base-rgb: var(--ion-color-app-rgb);
+	--ion-color-contrast: var(--ion-color-app-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-app-contrast-rgb);
+	--ion-color-shade: var(--ion-color-app-shade);
+	--ion-color-tint: var(--ion-color-app-tint);
+}
+
+
+ion-segment-button {
+  --background-checked: white !important;
+  --color-checked: black !important;
+  --indicator-color: #00a19a !important;
+  text-transform: none;
+}
+
+
+/* Stars rating styles */
+label.star {
+  float: right !important;
+  padding: 5px !important;
+  font-size: 20px !important;
+  color: #00A19A !important;
+  transition: all .2s !important;
+  -webkit-transition: all .2s !important;
+  -moz-transition: all .2s !important;
+  -ms-transition: all .2s !important;
+  -o-transition: all .2s !important;
+}
+
+input.star:checked~label.star:before {
+  color: #00A19A !important;
+  text-shadow: none !important;
+}
+
+input.star:checked~label.star:before {
+  content: "\f005" !important;
+  color: #00A19A !important;
+  transition: all .25s !important;
+  -webkit-transition: all .25s !important;
+  -moz-transition: all .25s !important;
+  -ms-transition: all .25s !important;
+  -o-transition: all .25s !important;
+}
+
+.f-size-16 {
+  font-size: 16px
+}
+
+.f-size-18 {
+  font-size: 18px;
+}
+
+.txt-center {
+  text-align: center;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.ml-10 {
+  margin-left: 10px;
+}
+
+.mb-7 {
+  margin-bottom: 7px;
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.mt-0 {
+  margin-top: 0;
+}
+
+.passwordIcon {
+  font-size: 1.4rem !important;
+  position: relative !important;
+  top: 22px !important;
+  margin: 0 auto !important;
+}
+
+ion-fab {
+  position: fixed;
+  margin-bottom: 3em;
+  margin-right: 1em;
+  --–background: #005989 !important;
+}
+
+ion-select {
+  width: 100%;
+}
+
+
+.remove_inner_bottom{
+  --inner-border-width: 0; // this removes the inner border width
+}

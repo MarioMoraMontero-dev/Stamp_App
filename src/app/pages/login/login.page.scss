@@ -1,0 +1,165 @@
+ion-content {
+    --background: none;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-image: url("../../../assets/images/bg.png");
+    background-size: cover;
+}
+
+:host {
+    .item-interactive.ion-invalid {
+        --highlight-background: #00A19A !important;
+    }
+
+    .item-interactive.ion-valid {
+        --highlight-background: #00A19A !important;
+    }
+}
+
+ion-item {
+    z-index: 0;
+}
+
+
+#stampLogo {
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    top: 5rem;
+}
+
+ion-item>ion-label {
+    color: #3C3C3B !important;
+}
+
+ion-item.item-has-focus>ion-label {
+    color: #00A19A !important;
+}
+
+.modalError {
+    text-align: center;
+    left: 52%;
+    margin: -100px 0 0 -150px;
+    position: fixed;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    z-index: 2;
+    width: 18rem;
+
+    p {
+        font-size: 0.9rem;
+    }
+
+    &.hidden {
+        display: none;
+    }
+
+    .closeIcon {
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
+        margin-bottom: -1em;
+        text-align: end;
+        color: white;
+        font-size: 1.7rem;
+        background-color: rgb(217, 119, 119);
+        padding-bottom: 4rem;
+        ion-icon{
+            margin: 1rem 1rem 0 0;
+        }
+
+        #circle {
+            text-align: center;
+            border-radius: 50%;
+            height: 3.5rem;
+            padding: 0.3rem;
+            margin: 0 7rem;
+            border: 5px solid white;
+            span{
+                font-size: 2rem;
+                font-weight: bold;
+            }
+        }
+    }
+
+    .modalBody {
+        padding: 1rem 1rem 0;
+    }
+
+}
+
+#divBtn {
+    .btn {
+        height: 3rem;
+        width: 11em;
+        background-color: #00A19A;
+        color: white;
+        border-radius: 30px;
+        font-size: 15px;
+        margin-bottom: 1em;
+    }
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+    z-index: 1;
+
+    &.hidden {
+        display: none;
+    }
+}
+
+
+#cardLoginForm {
+    background-color: white;
+    height: 29rem;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    text-align: center;
+
+    form {
+        margin: 0em 2em;
+    }
+
+    .infoText {
+        font-size: small;
+        color: #3C3C3B;
+    }
+
+    #registerSpan {
+        color: #00A19A;
+    }
+
+    button {
+        height: 3rem;
+        width: 20em;
+        background-color: #00A19A;
+        color: white;
+        border-radius: 30px;
+        font-size: 15px;
+    }
+
+    .divError {
+        text-align: center;
+
+        .error {
+            font-size: small;
+            color: red;
+        }
+    }
+}
+
+
+.support{
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+  }

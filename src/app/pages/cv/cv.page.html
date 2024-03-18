@@ -1,0 +1,500 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-icon (click)="goBack()" name="arrow-back-outline"></ion-icon>
+        <ion-title>{{headerText}}</ion-title>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-toolbar>
+</ion-header>
+ 
+<ion-content>
+  <div class="main">
+    <section id="modalErrorCV" class="modalError hidden">
+      <div>
+        <div class="closeIcon" (click)="closeModalError()">
+          <ion-icon name="close-outline"></ion-icon>
+          <div id="circle">
+            <span>X</span>
+          </div>
+        </div>
+        <br />
+        <div class="modalBody">
+          <h2>¡Error!</h2>
+          <p>{{modalErrroBody}}</p>
+        </div>
+      </div>
+      <br />
+      <br />
+      <div id="divBtn">
+        <button class="btn" (click)="closeModalError()">
+          Volver a intentar
+        </button>
+      </div>
+    </section>
+
+    <section  id="modalCVSent" class="modalCVSent hidden">
+      <div>
+        <div class="closeIcon" (click)="closeCVSentModal()">
+          <ion-icon name="close-outline"></ion-icon>
+        </div>
+        <div class="selectPhotoMode">
+          <br>
+          <img src="../../../assets/images/dialog_cv.png" alt="">
+          <h4>CV enviado</h4>
+          <p>Se ha generado una copia del CV y se envió a tu correo electrónico registrado</p>
+        </div>
+        <div id="divBtn">
+          <button (click)="closeCVSentModal()" class="btn">Ok</button>
+        </div>
+      </div>
+      <br />
+    </section>
+
+    <div class="overlay hidden" id="overlayErrorCV" (click)="closeModalError();closeCVSentModal();"></div>
+    
+    <div *ngIf="isMainPage">
+      <button (click)="selectAcademicDegreePage()" class="cvDataBtn">Nivel Académico</button><br>
+      <button (click)="selectLaboralExpPage()" class="cvDataBtn">Experiencia laboral</button><br>
+      <button (click)="selectCertificationsPage()" class="cvDataBtn">Certificaciones</button><br>
+      <button (click)="selectLanguagePage()" class="cvDataBtn">Idiomas</button><br>
+      <button (click)="selectLicensesPage()" class="cvDataBtn">Licencia de conducir</button><br>
+      <button (click)="selectAttachPage()" class="cvDataBtn">Adjuntos</button><br><br>
+      <div id="divBtn">
+        <button (click)="sendMeCV()" class="sendCvBtn">Envíame el CV</button><br>
+        <!-- <button class="continueCVBtn">Continuar</button><br> -->
+      </div>
+    </div>
+
+    <!-- Inicia Page Grado Academico -->
+    <div *ngIf="isAcademicDegreePage">
+      <section id="modalDate" class="modalDate hidden">
+        <div>
+          <h2>Seleccione la fecha deseada</h2>
+          <div class="selectDayInputs">
+            <ion-item>
+              <ion-label position="floating">Día</ion-label>
+              <ion-input [(ngModel)]="birthDay" maxlength="2" type="tel"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Mes</ion-label>
+              <ion-input [(ngModel)]="birthMonth" maxlength="2" type="tel"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Año</ion-label>
+              <ion-input [(ngModel)]="birthyear" maxlength="4" type="tel"></ion-input>
+            </ion-item>
+          </div>
+          <div class="divError">
+            <span class="error" *ngIf="incompletedFields">
+              Debe de completar los campos de día, mes y año.
+            </span>
+            <span class="error" *ngIf="wrongDay">
+              El día debe ser un valor de entre 1 y 31.
+            </span>
+            <span class="error" *ngIf="wrongMonth">
+              El mes debe ser un valor de entre 1 y 12.
+            </span>
+            <span class="error" *ngIf="wrongyear">
+              El año debe ser mayo a 1900.
+            </span>
+          </div>
+        </div>
+        <br><br>
+        <div id="divBtn">
+          <button class="btn" (click)="setDateValue()">Finalizar</button>
+        </div>
+      </section>
+      <div class="overlay hidden" id="overlayDate" (click)="closeDateModal();"></div>
+
+      <form [formGroup]="academicForm">
+        <ion-item>
+          <ion-select formControlName="degree" okText="Seleccionar" cancelText="Cancelar" placeholder="Grado Académico">
+            <ion-select-option *ngFor="let g of gradeList" value={{g._id}}>{{g.name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && academicForm.controls.degree.errors?.required">
+            Grado académico requerido
+          </span>
+        </div>
+        <br>
+        <div class="degreeLvl">
+          <p>Nivel Máximo Obtenido</p>
+          <ion-item>
+            <ion-checkbox slot="start"
+              (click)="checkIncompletedDegree.setValue(false);checkCursingDegree.setValue(false);"
+              [formControl]="checkCompletedDegree"></ion-checkbox>
+            <ion-label>Completado</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox slot="start"
+              (click)="checkCompletedDegree.setValue(false);checkCursingDegree.setValue(false);"
+              [formControl]="checkIncompletedDegree"></ion-checkbox>
+            <ion-label>Incompleto</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox slot="start"
+              (click)="checkCompletedDegree.setValue(false);checkIncompletedDegree.setValue(false);"
+              [formControl]="checkCursingDegree"></ion-checkbox>
+            <ion-label>Cursando</ion-label>
+          </ion-item>
+        </div>
+        <br>
+
+        <ion-item>
+          <ion-label position="floating">Institución Académica</ion-label>
+          <ion-input formControlName="institution_Name" type="text"></ion-input>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && academicForm.controls.institution_Name.errors?.required">
+            Institución requerida
+          </span>
+        </div>
+        <br>
+        <ion-item (click)="openDateModal()">
+          <ion-label>{{birthDateValue}}</ion-label>
+          <ion-icon name="calendar-outline"></ion-icon>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && academicForm.controls.finish_Date.errors?.required">
+            Año de finalización requerido
+          </span>
+        </div>
+      </form>
+      <br><br>
+      <div id="divBtn">
+        <button (click)="addAcademicDegree()" class="addCVBtn">Agregar</button><br>
+      </div>
+      <br>
+      <div class="userGrades" *ngIf="gradeUserList.length > 0">
+        <div *ngFor="let g of gradeUserList">
+          Grado: {{getGradeName(g.grade)}}
+          <button (click)="removeAcademicDegree(g._id)">X</button>
+        </div>
+      </div>
+    </div>
+    <!--Termina Page Grado Academico  -->
+
+
+
+    <!-- Inicia Page Exp laboral -->
+    <div *ngIf="isLaboralExpPage">
+      <section id="modalDate" class="modalDate hidden">
+        <div>
+          <h2>Seleccione la fecha deseada</h2>
+          <div class="selectDayInputs">
+            <ion-item>
+              <ion-label position="floating">Día</ion-label>
+              <ion-input [(ngModel)]="startDay" maxlength="2" type="tel"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Mes</ion-label>
+              <ion-input [(ngModel)]="startMonth" maxlength="2" type="tel"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Año</ion-label>
+              <ion-input [(ngModel)]="startYear" maxlength="4" type="tel"></ion-input>
+            </ion-item>
+          </div>
+          <div class="divError">
+            <span class="error" *ngIf="incompletedStartFields">
+              Debe de completar los campos de día, mes y año.
+            </span>
+            <span class="error" *ngIf="wrongStartDay">
+              El día debe ser un valor de entre 1 y 31.
+            </span>
+            <span class="error" *ngIf="wrongStartMonth">
+              El mes debe ser un valor de entre 1 y 12.
+            </span>
+            <span class="error" *ngIf="wrongStartyear">
+              El año debe ser mayo a 1900.
+            </span>
+          </div>
+        </div>
+        <br><br>
+        <div id="divBtn">
+          <button class="btn" (click)="setDateValue('start')">Finalizar</button>
+        </div>
+      </section>
+
+      <section id="modalDateEnd" class="modalDate hidden">
+        <div>
+          <h2>Seleccione la fecha deseada</h2>
+          <div class="selectDayInputs">
+            <ion-item>
+              <ion-label position="floating">Día</ion-label>
+              <ion-input [(ngModel)]="endDay" maxlength="2" type="tel"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Mes</ion-label>
+              <ion-input [(ngModel)]="endMonth" maxlength="2" type="tel"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Año</ion-label>
+              <ion-input [(ngModel)]="endYear" maxlength="4" type="tel"></ion-input>
+            </ion-item>
+          </div>
+          <div class="divError">
+            <span class="error" *ngIf="incompletedEndFields">
+              Debe de completar los campos de día, mes y año.
+            </span>
+            <span class="error" *ngIf="wrongEndDay">
+              El día debe ser un valor de entre 1 y 31.
+            </span>
+            <span class="error" *ngIf="wrongEndMonth"> 
+              El mes debe ser un valor de entre 1 y 12.
+            </span>
+            <span class="error" *ngIf="wrongEndyear">
+              El año debe ser mayo a 1900.
+            </span>
+          </div>
+        </div>
+        <br><br>
+        <div id="divBtn">
+          <button class="btn" (click)="setDateValue('end')">Finalizar</button>
+        </div>
+      </section>
+      <div class="overlay hidden" id="overlayDate" (click)="closeDateModal();closeDateEndModal();"></div>
+
+      <form [formGroup]="workExpForm">
+        <ion-item>
+          <ion-label position="floating">Nombre de la empresa</ion-label>
+          <ion-input formControlName="company_Name" type="text"></ion-input>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && workExpForm.controls.company_Name.errors?.required">
+            Nombre de compañia requerida
+          </span>
+        </div>
+        <br>
+        <ion-item>
+          <ion-label position="floating">Rol que desempeño</ion-label>
+          <ion-input formControlName="job_Description" type="text"></ion-input>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && workExpForm.controls.job_Description.errors?.required">
+            Rol requerido
+          </span>
+        </div>
+        <br>
+        <ion-item (click)="openDateModal()">
+          <ion-label>{{startDateJobValue}}</ion-label>
+          <ion-icon name="calendar-outline"></ion-icon>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && workExpForm.controls.from_Date.errors?.required">
+            Fecha de ingreso requerida
+          </span>
+        </div>
+        <br>
+        <ion-item (click)="openDateEndModal()">
+          <ion-label>{{endDateJobVale}}</ion-label>
+          <ion-icon name="calendar-outline"></ion-icon>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && workExpForm.controls.from_Date.errors?.required">
+            Fecha de salida requerida
+          </span>
+        </div>
+      </form>
+      <br><br>
+      <div id="divBtn">
+        <button class="addCVBtn" (click)="addWorkExp()">Agregar</button><br>
+      </div>
+      <br>
+      <div class="userGrades" *ngIf="userWorkExpList.length > 0">
+        <div *ngFor="let e of userWorkExpList">
+          {{e.job_Description}} : {{e.company_Name}}
+          <button (click)="removeWorkExp(e._id)">X</button>
+        </div>
+      </div>
+    </div>
+    <!--Termina Page Exp laboral  -->
+
+    <!-- Inicia Page Certificaciones -->
+    <div *ngIf="isCertificationsPage">
+      <form [formGroup]="certificationsForm">
+        <ion-item>
+          <ion-label position="floating">Nombre de la certificación</ion-label>
+          <ion-input formControlName="certification_Name" type="text"></ion-input>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && certificationsForm.controls.certification_Name.errors?.required">
+            Nombre de certificación requerida
+          </span>
+        </div>
+        <br>
+        <ion-item>
+          <ion-label position="floating">Institución académica</ion-label>
+          <ion-input formControlName="institution_Name" type="text"></ion-input>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && certificationsForm.controls.institution_Name.errors?.required">
+            Nombre de institución requerido
+          </span>
+        </div>
+        <br>
+        <ion-item>
+          <ion-label position="floating">Duración en horas</ion-label>
+          <ion-input formControlName="length" type="tel"></ion-input>
+        </ion-item>
+        <div class="divError">
+          <span class="error" *ngIf="isSubmitted && certificationsForm.controls.length.errors?.required">
+            Duración de horas requerida
+          </span>
+        </div>
+      </form>
+      <br>
+      <div class="degreeLvl">
+        <ion-item>
+          <ion-checkbox slot="start"
+            (click)="checkIncompletedDegree.setValue(false);checkCursingDegree.setValue(false);"
+            [formControl]="checkCompletedDegree"></ion-checkbox>
+          <ion-label>Completado</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox slot="start" (click)="checkCompletedDegree.setValue(false);checkCursingDegree.setValue(false);"
+            [formControl]="checkIncompletedDegree"></ion-checkbox>
+          <ion-label>Incompleto</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox slot="start"
+            (click)="checkCompletedDegree.setValue(false);checkIncompletedDegree.setValue(false);"
+            [formControl]="checkCursingDegree"></ion-checkbox>
+          <ion-label>Cursando</ion-label>
+        </ion-item>
+      </div>
+      <br>
+      <div id="divBtn">
+        <button (click)="addCertification()" class="addCVBtn">Agregar</button><br>
+      </div>
+      <div class="userGrades" *ngIf="userCertificationList.length > 0">
+        <div *ngFor="let c of userCertificationList">
+          {{c.institution_Name}} : {{c.certification_Name}}
+          <button (click)="removeCertification(c._id)">X</button>
+        </div>
+      </div>
+    </div>
+    <!--Termina Page Certificaciones  -->
+
+    <!-- Inicia Page Idiomas -->
+    <div *ngIf="isLanguagePage">
+      <ion-item>
+        <ion-select [(ngModel)]="nativeLang" okText="Seleccionar" cancelText="Cancelar"
+          placeholder="Seleccione el idioma nativo">
+          <ion-select-option *ngFor="let l of languagesSelectList" value={{l._id}}>{{l.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <br>
+      <div id="divBtn">
+        <button class="addCVBtn" [disabled]="nativeLang == ''" (click)="addUserLanguage('NATIVE')">Agregar</button><br>
+      </div>
+      <br>
+      <ion-item>
+        <ion-select [(ngModel)]="otherLang" okText="Seleccionar" cancelText="Cancelar"
+          placeholder="Seleccione otros idiomas">
+          <ion-select-option *ngFor="let l of languagesSelectList" value={{l._id}}>{{l.name}}</ion-select-option>
+        </ion-select>
+      </ion-item><br>
+      <ion-list>
+        <ion-radio-group [allowEmptySelection]="false" [(ngModel)]="languageType">
+          <ion-item>
+            <ion-label>Básico</ion-label>
+            <ion-radio value="BASIC"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Intermedio</ion-label>
+            <ion-radio value="INTERMEDIATE"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Avanzado</ion-label>
+            <ion-radio value="ADVANCED"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+
+      <br>
+      <div id="divBtn">
+        <button class="addCVBtn" [disabled]="otherLang == ''" (click)="addUserLanguage('OTHER')">Agregar</button><br>
+      </div>
+      <div class="userGrades" *ngIf="userNativeLangList.length > 0">
+        <p>Nativo</p>
+        <div *ngFor="let l of userNativeLangList" style="text-transform: capitalize;">
+          {{getLanguageName(l)}}
+          <button (click)="removeUserLanguage(l._id)">X</button>
+        </div>
+      </div>
+      <br><br>
+      <div class="userGrades" *ngIf="userOtherLangList.length > 0">
+        <p>Otros idiomas</p>
+        <div *ngFor="let l of userOtherLangList" style="text-transform: capitalize;">
+          {{getLanguageName(l)}}
+          <button (click)="removeUserLanguage(l._id)">X</button>
+        </div>
+      </div>
+    </div>
+    <!--Termina Page Idiomas  -->
+
+    <!-- Inicia Page Licencias -->
+    <div *ngIf="isLicensesPage">
+      <ion-item *ngFor="let l of licenseList">
+        <ion-checkbox (click)="addRemoveLicense(l)" [checked]=l.added slot="start"></ion-checkbox>
+        <ion-label>{{l.name}}</ion-label>
+      </ion-item>
+
+    </div>
+    <!--Termina Page Licencias -->
+
+    <!-- Inicia Page Adjuntos -->
+    <div *ngIf="isAttachPage">
+      <section id="modalCamera" class="modalCamera hidden">
+        <div>
+          <div class="closeIcon" (click)="closePhotoModal()">
+            <ion-icon name="close-outline"></ion-icon>
+          </div>
+          <div class="selectPhotoMode">
+            <button (click)="pickImageCamera()">
+              <img src="../../../assets/images/select_photo.png" alt="" srcset=""><br>
+              <p>Tomar foto</p>
+            </button>
+
+            <button (click)="pickImageLibrary()">
+              <img src="../../../assets/images/select_gallery.png" alt="" srcset=""><br>
+              <p>Abrir galería</p>
+            </button>
+          </div>
+        </div>
+        <br>
+      </section>
+      <div class="overlay hidden" id="overlayCamera" (click)="closePhotoModal();"></div>
+      <div id="divAttachCV">
+        <div class="btnAttachCV">
+          <img (click)="openPhotoModal('USERID')" *ngIf="userIdImg == '' || userIdImg == undefined "
+            src="../../../assets/images/camera.png" alt="" srcset="">
+          <img (click)="openPhotoModal('USERID')" *ngIf="userIdImg != ''" src={{userIdImg}} alt="" srcset="">
+          <p>Documento de identidad</p>
+        </div>
+        <br><br>
+        <div class="btnAttachCV">
+          <img (click)="openPhotoModal('CRIMINAL_RECORD')"
+            *ngIf="criminalRecordImg == '' || criminalRecordImg == undefined " src="../../../assets/images/camera.png"
+            alt="" srcset="">
+          <img (click)="openPhotoModal('CRIMINAL_RECORD')" *ngIf="criminalRecordImg != ''" src={{criminalRecordImg}}
+            alt="" srcset="">
+          <p>Hoja de delincuencia</p>
+        </div>
+      </div>
+    </div>
+    <!--Termina Page Adjuntos  -->
+
+
+    <ngx-loading [show]="isLoading" [config]="{
+    animationType: ngxLoadingAnimationTypes.circle,
+    primaryColour: primaryColour,
+    backdropBorderRadius: '3px',
+    fullScreenBackdrop:true
+  }"></ngx-loading>
+  </div>
+</ion-content>

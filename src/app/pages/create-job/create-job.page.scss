@@ -1,0 +1,411 @@
+ion-title {
+  color: #00a19a;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+:host {
+  .item-interactive.ion-invalid {
+    --highlight-background: #00a19a !important;
+  }
+
+  .item-interactive.ion-valid {
+    --highlight-background: #00a19a !important;
+  }
+}
+
+:host(.radio-checked) .radio-icon {
+  border-color: #00a19a !important;
+}
+
+ion-select {
+  width: 100%;
+}
+
+
+ion-item {
+  z-index: 0;
+}
+
+ion-buttons {
+  color: #00a19a !important;
+  font-size: 1.5rem;
+  padding-left: 0.5em;
+}
+
+.tick-marks {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  margin: -10px 0 0 0;
+  padding: 0 10px;
+
+  li {
+    // color: #333; /* var(--ion-color-dark); */
+    position: relative;
+    margin-left: 3px;
+
+    &::before {
+      // background-color: #333; /* var(--ion-color-dark); */
+      // content: '';
+      display: block;
+      height: 1em;
+      left: 50%;
+      position: absolute;
+      width: 1px;
+      top: -20px;
+    }
+  }
+}
+
+.main {
+  margin: 2rem 2rem 0;
+  text-align: center;
+
+  .btnSelect {
+    justify-content: space-between;
+    display: flex;
+  }
+
+  .userGrades {
+    p {
+      text-align: left;
+      color: gray;
+    }
+
+    hr {
+      border-top: 1px solid gray;
+    }
+
+    width: 100%;
+    justify-content: space-between;
+
+    div {
+      border: 1px solid;
+      float: left;
+      padding: 3px 8px;
+      background: #ccc8c8;
+      font-size: 15px;
+      text-align: justify;
+      border-radius: 30px;
+      margin-right: 0.3em;
+      margin-left: 0.5em;
+      margin-bottom: 0.5em;
+
+      button {
+        background: #ccc8c8;
+        font-size: 15px;
+        margin-left: 5px;
+      }
+    }
+  }
+
+  #textDistance {
+    text-align: initial;
+    font-size: 0.9rem;
+  }
+
+  button {
+    background-color: #00a19a;
+    color: white;
+    font-size: 15px;
+
+    &#createBtn {
+      height: 3rem;
+      border-radius: 30px;
+      width: 20em;
+    }
+  }
+
+  #addLanguageBtn {
+    background-color: white;
+    color: black;
+    font-size: 15px;
+    height: 2rem;
+    font-weight: bolder;
+    border-radius: 30px;
+    box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+    width: 10em;
+  }
+
+  #addLanguage {
+    background-color: white;
+    color: black;
+    font-size: 15px;
+    height: 2rem;
+    font-weight: bold;
+    border-radius: 30px;
+    width: 11em;
+    box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+  }
+
+
+  .btnOptions {
+    margin-top: 0.6rem;
+
+    button {
+      margin-left: 0.3rem;
+      width: 2.5rem;
+      height: 1.7rem;
+      border-radius: 5px;
+
+      &.unselected {
+        background-color: #848480;
+      }
+
+      &.selected {
+        background-color: #00A19A;
+      }
+    }
+
+    &.localization {
+      button {
+        &#deviceBtn {
+          width: 5rem;
+        }
+      }
+    }
+  }
+
+  .divError {
+    text-align: center;
+
+    .error {
+      font-size: small;
+      color: red;
+    }
+  }
+}
+
+
+
+.modalCamera {
+  text-align: center;
+  padding: 1rem 1rem 0;
+  position: sticky;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  z-index: 2;
+  top: 15%;
+
+  &.hidden {
+    display: none;
+  }
+
+  .closeIcon {
+    margin-bottom: -1em;
+    text-align: end;
+    color: #00A19A;
+    font-size: 1.7rem;
+  }
+
+  #divBtn {
+    .btn {
+      height: 2rem;
+      width: 100%;
+      background-color: #00a19a;
+      color: white;
+      border-radius: 30px;
+      font-size: 1rem;
+    }
+  }
+
+  .selectPhotoMode {
+    img {
+      width: 10rem;
+    }
+
+    h4 {
+      color: #00A19A;
+    }
+
+    p {
+      font-family: 'Lato', sans-serif;
+      font-size: 15px;
+    }
+  }
+}
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+  z-index: 1;
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.languageExpSelect {
+  display: table-caption;
+  margin-top: 1em;
+
+  span {
+    margin-left: 1em;
+  }
+}
+
+.ClockSizes {
+  display: flex;
+  justify-content: space-between;
+
+  ion-radio {
+    margin-left: 10px;
+    z-index: auto;
+    margin-right: 5px;
+  }
+}
+
+
+
+.gps{
+  position: fixed;
+  right: 0;
+  left: 0;
+  button {
+    height: 3rem;
+    width: 15em;
+    background-color: #00A19A;
+    color: white;
+    border-radius: 30px;
+    font-size: 15px;
+  }
+  #map {
+    width: 100%;
+    // height: 450px;
+    height: 30em;
+    background: grey;
+  }
+}
+
+
+.modalError {
+  text-align: center;
+  left: 52%;
+  top: 33%;
+  margin: -100px 0 0 -150px;
+  position: fixed;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  z-index: 2;
+  width: 18rem;
+
+  p {
+    font-size: 0.9rem;
+  }
+
+  &.hidden {
+    display: none;
+  }
+
+  #divBtn {
+    .btn {
+      height: 3rem;
+      width: 9em;
+      margin-bottom: 1em;
+      background-color: #00a19a;
+      color: white;
+      border-radius: 30px;
+      font-size: 1rem;
+    }
+  }
+
+  .closeIcon {
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    margin-bottom: -1em;
+    text-align: end;
+    color: white;
+    font-size: 1.7rem;
+    background-color: rgb(217, 119, 119);
+    padding-bottom: 4rem;
+
+    ion-icon {
+      margin: 1rem 1rem 0 0;
+    }
+
+    #circle {
+      text-align: center;
+      border-radius: 50%;
+      height: 3.5rem;
+      padding: 0.3rem;
+      margin: 0 7rem;
+      border: 5px solid white;
+
+      span {
+        font-size: 2rem;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .modalBody {
+    padding: 1rem 1rem 0;
+  }
+
+}
+
+.modalCVSent {
+  text-align: center;
+  padding: 1rem 1rem 0;
+  position: fixed;
+  background-color: white;
+  right: 25px;
+  bottom: 200px;
+  left: 25px;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  z-index: 2;
+
+  &.hidden {
+    display: none;
+  }
+
+  .closeIcon {
+    margin-bottom: -1em;
+    text-align: end;
+    color: #00A19A;
+    font-size: 1.7rem;
+  }
+
+  #divBtn {
+    .btn {
+      height: 2rem;
+      width: 100%;
+      background-color: #00a19a;
+      color: white;
+      border-radius: 30px;
+      font-size: 1rem;
+    }
+  }
+
+  .selectPhotoMode {
+    display: block;
+
+    img {
+      width: 10rem;
+    }
+
+    h4 {
+      color: #00A19A;
+    }
+
+    p {
+      font-family: 'Lato', sans-serif;
+      font-size: 15px;
+    }
+  }
+
+
+}

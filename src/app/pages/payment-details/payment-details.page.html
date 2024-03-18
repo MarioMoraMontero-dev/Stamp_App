@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-icon (click)="goBack()" name="close-outline"></ion-icon>
+        <ion-title>Premium</ion-title>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div class="main">
+    <h3>¿Qué beneficios obtengo?</h3>
+    <div *ngIf="planId == 0">
+      <p>- Ocultar la publicidad.</p>
+      <p>- Puede ubicarse donde quiera con el GPS.</p>
+      <p>- Aparecería entre las primeras opciones del listado de las empresas a las que ofrece servicio.</p>
+    </div>
+
+    <p *ngIf="planId == 1 || planId == 2 || planId == 3">- Ubicación según GPS o a elección.</p>
+    <p *ngIf="planId == 1 || planId == 2 || planId == 3">- Puede colocar más de una búsqueda de empleo.</p>
+    <p *ngIf="planId == 1 || planId == 2 || planId == 3">- Escoge el orden de aquello que considere de más a menos
+      importante</p>
+    <p *ngIf="planId == 2 || planId == 3">- Permiso para publicar publicidad por zona geográfica.</p>
+    <p *ngIf="planId == 3">- Nuestro equipo de diseño te apoya en la elaboración de los anuncios</p>
+
+    <br>
+    <div class="selectPremiumTime">
+      <h4>Tipo de membresía</h4>
+      <ion-list (ionChange)="getPremiumPrice(planId)">
+        <ion-radio-group [allowEmptySelection]="false" [(ngModel)]="premiumTime">
+          <ion-item>
+            <ion-label>Mensual</ion-label>
+            <ion-radio slot="start" value="mensual"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Trimestral</ion-label>
+            <ion-radio slot="start" value="trimestre"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Semestral</ion-label>
+            <ion-radio slot="start" value="semestre"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Anual</ion-label>
+            <ion-radio slot="start" value="anual"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+    </div>
+
+    <div class="row" *ngIf="premiumPrice != 0">
+      <div [appPaypalSubscription]=premiumPrice></div>
+    </div>
+    <div id="divBtn">
+      <button (click)="goBack()">Cancelar</button>
+    </div>
+
+  </div>
+</ion-content>

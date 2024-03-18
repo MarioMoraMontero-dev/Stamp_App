@@ -1,0 +1,73 @@
+ion-content {
+    --background: none;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+ion-title {
+    color: #00A19A;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+ion-buttons {
+    color: #00a19a !important;
+    font-size: 1.5rem;
+    padding-left: 0.5em;
+    left: 0;
+    position: fixed;
+    right: 10px;
+}
+
+.main {
+    text-align: center;
+    color: white;
+
+    img {
+        width: 7rem;
+    }
+
+    .arrows{
+        left: 0;
+        right: 0;
+        position: fixed;
+        top: 45%;
+        display: inline-flex;
+        justify-content: space-between;
+        z-index: 99999999;
+        ion-icon{
+            font-size: 3.5rem;
+        }
+    }
+
+
+    .pricesPlan {
+        display: block;
+        position: fixed;
+        top: 45%;
+        right: 0;
+        left: 0%;
+        p {
+            font-size: 1.5rem;
+        }
+    }
+
+    #divBtn {
+        position: absolute;
+        left: 0%;
+        right: 0;
+        top: 80%;
+        button {
+            height: 3rem;
+            width: 19rem;
+            background-color: white;
+            color: black;
+            border-radius: 30px;
+            font-size: 15px;
+            margin-top: 1rem;
+            margin-bottom: 1em;
+        }
+    }
+}

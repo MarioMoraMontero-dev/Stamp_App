@@ -1,0 +1,34 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.stamp.io"
+    },
+    "cordova-plugin-geolocation": {
+      "GPS_REQUIRED": "true",
+      "PACKAGE_NAME": "com.stamp.io"
+    },
+    "cordova-plugin-ionic-keyboard": {
+      "PACKAGE_NAME": "com.stamp.io"
+    },
+    "cordova-plugin-ionic-webview": {
+      "PACKAGE_NAME": "com.stamp.io"
+    },
+    "cordova-plugin-nativegeocoder": {
+      "PACKAGE_NAME": "com.stamp.io"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "com.stamp.io"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "com.stamp.io"
+    }
+  },
+  "dependent_plugins": {}
+}
