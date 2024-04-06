@@ -1,16 +1,16 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.stamp.app',
+  appId: 'com.stamp.oficialapp',
   appName: 'Stamp',
   webDir: 'www',
   bundledWebRuntime: false,
   plugins: {
     SplashScreen: {
       launchShowDuration: 3000,
-      backgroundColor: "#005988",
+      backgroundColor: "#115988",
+      launchAutoHide: true,
       showSpinner: false,
-      androidSpinnerStyle: "small",
       splashFullScreen: true,
       splashImmersive: true,
     },
