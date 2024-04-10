@@ -34,7 +34,7 @@ export class OfferJobsPage {
   isSubmitted = false;
   isLoading = false;
   isUpdateOfferPage = false;
-  primaryColour = '#00A19A';
+  primaryColour = '#0F857C ';
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   modalErrroBody: string;
   candidatesList: any = [];

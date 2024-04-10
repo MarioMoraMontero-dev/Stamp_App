@@ -22,7 +22,7 @@ export class EmployerGeneralDataPage implements OnInit {
 
   isSubmitted = false;
   isLoading = false;
-  primaryColour = '#00A19A';
+  primaryColour = '#0F857C ';
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   userData: any;
   wrongDay: boolean = false;

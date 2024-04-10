@@ -1,5 +1,5 @@
 ion-title {
-    color: #00a19a;
+    color: #0F857C ;
     text-align: center;
     font-weight: bold;
     font-size: 1.1rem;
@@ -7,16 +7,16 @@ ion-title {
 
 :host {
     .item-interactive.ion-invalid {
-        --highlight-background: #00a19a !important;
+        --highlight-background: #0F857C  !important;
     }
 
     .item-interactive.ion-valid {
-        --highlight-background: #00a19a !important;
+        --highlight-background: #0F857C  !important;
     }
 }
 
 :host(.radio-checked) .radio-icon {
-    border-color: #00a19a !important;
+    border-color: #0F857C  !important;
 }
 
 ion-select {
@@ -70,7 +70,7 @@ ion-item {
         .btn {
             height: 3rem;
             width: 9em;
-            background-color: #00A19A;
+            background-color: #0F857C ;
             color: white;
             border-radius: 30px;
             margin-bottom: 1em;

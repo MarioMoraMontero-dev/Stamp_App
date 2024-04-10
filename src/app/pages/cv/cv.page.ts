@@ -31,7 +31,7 @@ export class CvPage implements OnInit {
   isLoading = false;
   isSubmitted = false;
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
-  primaryColour = '#00A19A';
+  primaryColour = '#0F857C ';
   licenseList: any = [];
   wrongDay: boolean = false;
   wrongMonth: boolean = false;

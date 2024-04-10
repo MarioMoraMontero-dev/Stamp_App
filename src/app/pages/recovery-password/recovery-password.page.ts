@@ -19,7 +19,7 @@ export class RecoveryPasswordPage implements OnInit {
   isSubmitted = false;
   isPasswordRecovered = false;
   isLoading = false;
-  primaryColour = "#00A19A";
+  primaryColour = "#0F857C ";
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   modalErrroBody: string;
 

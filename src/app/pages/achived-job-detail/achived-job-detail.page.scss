@@ -1,28 +1,28 @@
 ion-title {
-    color: #00a19a;
+    color: #0F857C ;
     text-align: center;
     font-weight: bold;
     font-size: 1.1rem;
 }
 
 ion-buttons {
-    color: #00a19a !important;
+    color: #0F857C  !important;
     font-size: 1.5rem;
     padding-left: 0.5em;
 }
 
 :host {
     .item-interactive.ion-invalid {
-        --highlight-background: #00a19a !important;
+        --highlight-background: #0F857C  !important;
     }
 
     .item-interactive.ion-valid {
-        --highlight-background: #00a19a !important;
+        --highlight-background: #0F857C  !important;
     }
 }
 
 :host(.radio-checked) .radio-icon {
-    border-color: #00a19a !important;
+    border-color: #0F857C  !important;
 }
 
 ion-select {
@@ -73,7 +73,7 @@ ion-item {
             .btn {
                 height: 3rem;
                 width: 9em;
-                background-color: #00A19A;
+                background-color: #0F857C ;
                 color: white;
                 border-radius: 30px;
                 margin-bottom: 1em;
@@ -167,7 +167,7 @@ button {
     width: 45%;
     max-width: 150px;
     background-color: white;
-    color: #00A19A;
+    color: #0F857C ;
     border: 1px solid;
     border-radius: 30px;
     font-size: 14px;
@@ -223,7 +223,7 @@ button {
             margin-bottom: -2em;
 
             ion-icon {
-                color: #00A19A;
+                color: #0F857C ;
                 font-size: 30px;
             }
         }
@@ -243,7 +243,7 @@ button {
     .btn {
         height: 3rem;
         width: 9em;
-        background-color: #00A19A;
+        background-color: #0F857C ;
         color: white;
         border-radius: 30px;
         margin-bottom: 1em;
@@ -275,7 +275,7 @@ hr {
     .closeIcon {
         margin-left: 90%;
         position: relative;
-        color: #00A19A;
+        color: #0F857C ;
         font-size: 1.7rem;
     }
 
@@ -284,7 +284,7 @@ hr {
             height: 2.5rem;
             width: 100%;
             max-width: 100%;
-            background-color: #00a19a;
+            background-color: #0F857C ;
             color: white;
             border-radius: 30px;
             font-size: 1rem;
@@ -298,7 +298,7 @@ hr {
         }
 
         h4 {
-            color: #00A19A;
+            color: #0F857C ;
         }
 
         p {
@@ -335,7 +335,7 @@ ion-item-divider {
 
 .calification {
     h4 {
-        color: #00a19a;
+        color: #0F857C ;
         text-align: center;
         margin-top: 20px;
     }
@@ -350,7 +350,7 @@ ion-item-divider {
         height: 3rem;
         max-width: 100%;
         width: 60%;
-        background-color: #00a19a;
+        background-color: #0F857C ;
         color: white;
         border-radius: 30px;
         font-size: 1rem;
@@ -406,7 +406,7 @@ ion-item-divider {
         }
 
         ion-icon {
-            color: #00A19A;
+            color: #0F857C ;
         }
     }
 }

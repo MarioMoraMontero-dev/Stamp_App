@@ -1,16 +1,16 @@
 ion-title {
-    color: #00A19A;
+    color: #0F857C ;
     text-align: center;
     font-size: 1.1rem;
 }
 
 :host {
     .item-interactive.ion-invalid {
-        --highlight-background: #00A19A !important;
+        --highlight-background: #0F857C  !important;
     }
 
     .item-interactive.ion-valid {
-        --highlight-background: #00A19A !important;
+        --highlight-background: #0F857C  !important;
     }
 }
 
@@ -27,12 +27,12 @@ ion-item>ion-label {
 }
 
 ion-item.item-has-focus>ion-label {
-    color: #00A19A !important;
+    color: #0F857C  !important;
 }
 
 
 ion-buttons {
-    color: #00a19a !important;
+    color: #0F857C  !important;
     font-size: 1.5rem;
     padding-left: 0.5em;
   }
@@ -78,13 +78,13 @@ ion-buttons {
     }
 
     #loginSpan {
-        color: #00A19A;
+        color: #0F857C ;
     }
 
     button {
         height: 3rem;
         width: 20em;
-        background-color: #00A19A;
+        background-color: #0F857C ;
         color: white;
         border-radius: 30px;
         font-size: 15px;
@@ -128,7 +128,7 @@ ion-buttons {
     .closeIcon {
         margin-bottom: -1em;
         text-align: end;
-        color: #00A19A;
+        color: #0F857C ;
         font-size: 1.7rem;
     }
 
@@ -200,7 +200,7 @@ ion-buttons {
     .btn {
         height: 3rem;
         width: 7em;
-        background-color: #00A19A;
+        background-color: #0F857C ;
         color: white;
         border-radius: 30px;
         font-size: 15px;

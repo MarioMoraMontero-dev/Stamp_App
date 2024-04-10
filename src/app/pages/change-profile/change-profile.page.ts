@@ -20,7 +20,7 @@ export class ChangeProfilePage implements OnInit {
 
   isSelectView = true;
   isSubmitted = false;
-  primaryColour = "#00A19A";
+  primaryColour = "#0F857C ";
   isLoading = false;
 
   birthDay: any;

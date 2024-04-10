@@ -25,7 +25,7 @@ export class AchievedPage implements OnInit {
   testText:String = ""
   IsPage: string = "APPLIED";
   isLoading = false;
-  primaryColour = "#00A19A";
+  primaryColour = "#0F857C ";
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   modalErrroBody: string;
   public form: FormGroup;

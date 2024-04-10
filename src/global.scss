@@ -37,7 +37,7 @@
 }
 
 :root {
-	--ion-color-app: #00a19a;
+	--ion-color-app: #0F857C ;
 	--ion-color-app-rgb: 0,161,154;
 	--ion-color-app-contrast: #ffffff;
 	--ion-color-app-contrast-rgb: 255,255,255;
@@ -85,7 +85,7 @@
 ion-segment-button {
   --background-checked: white !important;
   --color-checked: black !important;
-  --indicator-color: #00a19a !important;
+  --indicator-color: #0F857C  !important;
   text-transform: none;
 }
 
@@ -95,7 +95,7 @@ label.star {
   float: right !important;
   padding: 5px !important;
   font-size: 20px !important;
-  color: #00A19A !important;
+  color: #0F857C  !important;
   transition: all .2s !important;
   -webkit-transition: all .2s !important;
   -moz-transition: all .2s !important;
@@ -104,13 +104,13 @@ label.star {
 }
 
 input.star:checked~label.star:before {
-  color: #00A19A !important;
+  color: #0F857C  !important;
   text-shadow: none !important;
 }
 
 input.star:checked~label.star:before {
   content: "\f005" !important;
-  color: #00A19A !important;
+  color: #0F857C  !important;
   transition: all .25s !important;
   -webkit-transition: all .25s !important;
   -moz-transition: all .25s !important;

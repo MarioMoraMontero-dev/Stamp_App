@@ -21,7 +21,7 @@ export class SearchFilterPage implements OnInit {
   userData: any;
   searchFilterForm: FormGroup;
   isSubmitted = false;
-  primaryColour = '#00A19A';
+  primaryColour = '#0F857C ';
   isLoading = false;
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
 

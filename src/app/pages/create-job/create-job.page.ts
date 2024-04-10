@@ -22,7 +22,7 @@ export class CreateJobPage implements OnInit {
   createJobForm: FormGroup;
   isSubmitted = false;
   isLoading = false;
-  primaryColour = '#00A19A';
+  primaryColour = '#0F857C ';
   salaryValue = 1000;
   distanceValue = 1;
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;

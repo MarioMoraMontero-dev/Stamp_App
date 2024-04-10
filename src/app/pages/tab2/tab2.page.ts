@@ -17,7 +17,7 @@ import { environment } from 'src/environments/environment';
 })
 export class Tab2Page {
   isLoading = false;
-  primaryColour = "#00A19A";
+  primaryColour = "#0F857C ";
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   modalErrroBody: string;
   offerList: any = [];

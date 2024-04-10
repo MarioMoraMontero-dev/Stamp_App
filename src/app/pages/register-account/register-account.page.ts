@@ -19,7 +19,7 @@ import { LocalStorageService } from 'src/app/shared/services/LocalStorage/local-
 export class RegisterAccountPage implements OnInit {
   isSelectView = true;
   isSubmitted = false;
-  primaryColour = "#00A19A";
+  primaryColour = "#0F857C ";
   isLoading = false;
   headerTitle = "Stamp"
 

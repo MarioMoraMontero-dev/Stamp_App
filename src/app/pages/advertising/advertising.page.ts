@@ -23,7 +23,7 @@ export class AdvertisingPage implements OnInit {
   isLoading = false;
   idDeleteAd = '';
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
-  primaryColour = '#00A19A';
+  primaryColour = '#0F857C ';
   modalErrroBody: string;
   base64Img = "";
 

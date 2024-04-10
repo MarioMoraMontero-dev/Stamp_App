@@ -19,7 +19,7 @@ export class LoginPage implements OnInit {
   loginForm: FormGroup;
   isSubmitted = false;
   isLoading = false;
-  primaryColour = "#00A19A";
+  primaryColour = "#0F857C ";
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   modalErrroBody = "";
   passwordType = "password";

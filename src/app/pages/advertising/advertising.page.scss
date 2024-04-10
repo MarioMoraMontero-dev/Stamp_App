@@ -7,11 +7,11 @@ ion-content {
 
 :host {
   .item-interactive.ion-invalid {
-    --highlight-background: #00a19a !important;
+    --highlight-background: #0F857C  !important;
   }
 
   .item-interactive.ion-valid {
-    --highlight-background: #00a19a !important;
+    --highlight-background: #0F857C  !important;
   }
 }
 
@@ -31,18 +31,18 @@ ion-item>ion-label {
 }
 
 ion-item.item-has-focus>ion-label {
-  color: #00a19a !important;
+  color: #0F857C  !important;
 }
 
 ion-title {
-  color: #00a19a;
+  color: #0F857C ;
   text-align: center;
   font-weight: bold;
   font-size: 1.1rem;
 }
 
 ion-buttons {
-  color: #00a19a !important;
+  color: #0F857C  !important;
   font-size: 1.5rem;
   padding-left: 0.5em;
 }
@@ -51,7 +51,7 @@ ion-buttons {
   text-align: start;
 
   h2 {
-    color: #00A19A;
+    color: #0F857C ;
   }
 
   p {
@@ -117,7 +117,7 @@ ion-buttons {
     }
 
     label {
-      color: #00a19a;
+      color: #0F857C ;
       font-size: 0.8rem;
     }
   }
@@ -147,7 +147,7 @@ ion-buttons {
       }
 
       &#publishBtn {
-        background-color: #00a19a;
+        background-color: #0F857C ;
       }
     }
   }
@@ -166,7 +166,7 @@ ion-buttons {
   .closeIcon {
     margin-bottom: -1em;
     text-align: end;
-    color: #00A19A;
+    color: #0F857C ;
     font-size: 1.7rem;
 
     ion-icon {
@@ -179,7 +179,7 @@ ion-buttons {
     .btn {
       height: 2rem;
       width: 9em;
-      background-color: #00A19A;
+      background-color: #0F857C ;
       color: white;
       border-radius: 30px;
       font-size: 15px;
@@ -211,7 +211,7 @@ ion-buttons {
   .closeIcon {
       margin-bottom: -1em;
       text-align: end;
-      color: #00A19A;
+      color: #0F857C ;
       font-size: 1.7rem;
   }
 
@@ -219,7 +219,7 @@ ion-buttons {
       .btn {
           height: 2rem;
           width: 100%;
-          background-color: #00a19a;
+          background-color: #0F857C ;
           color: white;
           border-radius: 30px;
           font-size: 1rem;
@@ -232,7 +232,7 @@ ion-buttons {
       }
 
       h4 {
-          color: #00A19A;
+          color: #0F857C ;
       }
 
       p {
@@ -297,7 +297,7 @@ ion-fab {
     .btn {
       height: 3rem;
       width: 9em;
-      background-color: #00A19A;
+      background-color: #0F857C ;
       color: white;
       border-radius: 30px;
       margin-bottom: 1em;
@@ -375,7 +375,7 @@ ion-fab {
   .btn4 {
       height: 3rem;
       width: 100%;
-      background-color: #00A19A !important;
+      background-color: #0F857C  !important;
       color: white !important;
       border-radius: 30px;
       margin-bottom: 1em;

@@ -1,5 +1,5 @@
 ion-title {
-    color: #00A19A;
+    color: #0F857C ;
     text-align: center;
     font-weight: bold;
     font-size: 1.1rem;
@@ -7,16 +7,16 @@ ion-title {
 
 :host {
     .item-interactive.ion-invalid {
-        --highlight-background: #00a19a !important;
+        --highlight-background: #0F857C  !important;
     }
 
     .item-interactive.ion-valid {
-        --highlight-background: #00a19a !important;
+        --highlight-background: #0F857C  !important;
     }
 }
 
 :host(.radio-checked) .radio-icon {
-    border-color: #00a19a !important;
+    border-color: #0F857C  !important;
 }
 
 
@@ -58,7 +58,7 @@ ion-item {
 }
 
 ion-buttons {
-    color: #00a19a !important;
+    color: #0F857C  !important;
     font-size: 1.5rem;
     padding-left: 0.5em;
 }
@@ -148,7 +148,7 @@ ion-buttons {
             }
 
             &.selected {
-                background-color: #00A19A;
+                background-color: #0F857C ;
             }
         }
 
@@ -212,7 +212,7 @@ ion-buttons {
         .btn {
             height: 3rem;
             width: 9em;
-            background-color: #00A19A;
+            background-color: #0F857C ;
             color: white;
             border-radius: 30px;
             margin-bottom: 1em;
@@ -286,7 +286,7 @@ ion-buttons {
         font-weight: bold;
 
         &.jobName {
-            color: #00a19a;
+            color: #0F857C ;
         }
 
         span {
@@ -318,7 +318,7 @@ ion-buttons {
     }
 
     span {
-        color: #00a19a;
+        color: #0F857C ;
         margin-left: 5px;
     }
 
@@ -418,7 +418,7 @@ ion-fab {
     .closeIcon {
         margin-bottom: -1em;
         text-align: end;
-        color: #00A19A;
+        color: #0F857C ;
         font-size: 1.7rem;
     }
 
@@ -426,7 +426,7 @@ ion-fab {
         .btn {
             height: 2rem;
             width: 100%;
-            background-color: #00a19a;
+            background-color: #0F857C ;
             color: white;
             border-radius: 30px;
             font-size: 1rem;
@@ -439,7 +439,7 @@ ion-fab {
         }
 
         h4 {
-            color: #00A19A;
+            color: #0F857C ;
         }
 
         p {
@@ -470,7 +470,7 @@ ion-fab {
     .closeIcon {
         margin-bottom: -1em;
         text-align: end;
-        color: #00A19A;
+        color: #0F857C ;
         font-size: 1.7rem;
     }
 
@@ -478,7 +478,7 @@ ion-fab {
         .btn {
             height: 2rem;
             width: 100%;
-            background-color: #00a19a;
+            background-color: #0F857C ;
             color: white;
             border-radius: 30px;
             font-size: 1rem;
@@ -493,7 +493,7 @@ ion-fab {
         }
 
         h4 {
-            color: #00A19A;
+            color: #0F857C ;
         }
 
         p {
@@ -508,7 +508,7 @@ ion-fab {
 .updateBtn {
     height: 2.5rem;
     width: 14em;
-    background-color: #00A19A;
+    background-color: #0F857C ;
     color: white;
     border-radius: 30px;
     margin-bottom: 1em;
@@ -543,7 +543,7 @@ ion-fab {
     button {
         height: 3rem;
         width: 15em;
-        background-color: #00A19A;
+        background-color: #0F857C ;
         color: white;
         border-radius: 30px;
         font-size: 15px;
@@ -584,7 +584,7 @@ ion-fab {
     }
 
     h4 {
-        color: #00a19a;
+        color: #0F857C ;
         margin-top: 20px;
         margin-bottom: 10px;
     }
@@ -594,8 +594,8 @@ ion-fab {
     }
 
     //   .like {
-    //     color: #00A19A;
-    //     border-color: #00A19A;
+    //     color: #0F857C ;
+    //     border-color: #0F857C ;
     //   }
 
     //   .dislike {
@@ -606,7 +606,7 @@ ion-fab {
     .custom-btn {
         height: 3rem;
         width: 80%;
-        background-color: #00A19A;
+        background-color: #0F857C ;
         color: white;
         font-size: 15px;
         border-radius: 30px;
@@ -703,14 +703,14 @@ ion-fab {
     button {
         height: 3rem;
         width: 80%;
-        background-color: #00A19A;
+        background-color: #0F857C ;
         color: white;
         border-radius: 30px;
         font-size: 15px;
     }
 
     h4 {
-        color: #00a19a;
+        color: #0F857C ;
         text-align: center;
         margin-top: 20px;
     }
@@ -779,7 +779,7 @@ ion-fab {
     .btn4 {
         height: 3rem;
         width: 100%;
-        background-color: #00A19A !important;
+        background-color: #0F857C  !important;
         color: white !important;
         border-radius: 30px;
         margin-bottom: 1em;
