@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { LocalStorageService } from 'src/app/shared/services/LocalStorage/local-storage.service';
 import { RatingService } from 'src/app/shared/services/Ratings/rating.service';
+import { SignupAccountService } from 'src/app/shared/services/SignUpAccount/signup-account.service';
 import { environment } from 'src/environments/environment';
 
 
@@ -20,20 +21,33 @@ export class HomePage {
   public form: FormGroup;
   isPremium = true;
   hasRating = false;
+  deleteAccountForm: FormGroup;
+  isSubmitted = false;
+  deleteAccountSuccessful = false;
 
-  
 
   subscription = new Subscription();
+
+  get errorControl() {
+    return this.deleteAccountForm.controls;
+  }
+
+
   constructor(
     public localStorageService: LocalStorageService,
     private router: Router,
     private platform: Platform,
     public formBuilder: FormBuilder,
-    private ratingService: RatingService
+    private ratingService: RatingService,
+    private signupAccountService: SignupAccountService
   ) {
     this.form = this.formBuilder.group({
       rating: [''],
     });
+    this.deleteAccountForm = this.formBuilder.group({
+      reason: ['', [Validators.required]],
+    });
+
   }
 
 
@@ -64,9 +78,9 @@ export class HomePage {
     }, 1000);
   }
 
-  
+
   getRatingUser(type: string) {
-    
+
     this.hasRating = true;
     if (type == "USER") {
       this.isPremium = this.userData.profiles.user.premium;
@@ -163,6 +177,47 @@ export class HomePage {
     this.localStorageService.deleteData("userData");
     this.localStorageService.deleteData("__paypal_storage__");
     this.router.navigateByUrl("/login");
+  }
+
+  openDeleteAccountModal() {
+    const modalWrapper = document.querySelector(".wrapper-modal-delete-account");
+    const overlay = document.querySelector("#overlayDeleteAccount");
+    modalWrapper?.classList.remove("hidden");
+    overlay?.classList.remove("hidden");
+    this.deleteAccountSuccessful = false;
+    this.deleteAccountForm.reset();
+    this.isSubmitted = false;
+  }
+
+
+  closeDeleteAccountModal() {
+    const modalWrapper = document.querySelector(".wrapper-modal-delete-account");
+    const overlay = document.querySelector("#overlayDeleteAccount");
+    modalWrapper?.classList.add("hidden");
+    overlay?.classList.add("hidden");
+  }
+
+  deleteAccount() {
+
+    this.isSubmitted = true;
+    if (!this.deleteAccountForm.valid) {
+      return;
+    }
+
+    const data = {
+      profile: 'BOTH',//this.userData.userType, 
+      reason: this.deleteAccountForm.controls.reason.value,
+      user: this.userData.profiles.user?.email || this.userData.profiles.employer?.email
+    }
+
+    this.signupAccountService.deleteAccount(data).subscribe((data: any) => {
+      if (data.status === 200) {
+        this.deleteAccountSuccessful = true;
+      }
+
+    }, err => {
+      console.log("🚀 ~ HomePage ~ this.signupAccountService.deleteAccount ~ err:", err)
+    })
   }
 
 }

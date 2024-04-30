@@ -1,6 +1,5 @@
-
 <ion-header [translucent]="true">
-  
+
   <ion-toolbar>
     <ion-buttons slot="secondary">
       <ion-button (click)="logoutApp()">
@@ -18,7 +17,7 @@
 
 </ion-header>
 <ion-content>
-  
+
 
   <div *ngIf="userData" class="main">
     <div class="profileImage">
@@ -26,11 +25,11 @@
       <img class="userImg" *ngIf="userData.userType === 'EMPLOYER'" src="{{getProfileImage()}}" alt="" />
       <img class="userImg" *ngIf="userData.userType === 'USER'" src="{{getProfileImage()}}" alt="" />
     </div>
-    <div *ngIf ="isPremium" class="headerPremiun">
+    <div *ngIf="isPremium" class="headerPremiun">
       <p>Cuenta Premium</p>
     </div>
-    <br/>
-    <form class="formRating" [ngClass]="{'noPremium': isPremium === false}"  [formGroup]="form">
+    <br />
+    <form class="formRating" [ngClass]="{'noPremium': isPremium === false}" [formGroup]="form">
       <div class="custom-rating-div">
         <div>
           <ngx-star-rating formControlName="rating" [id]="'rating'"></ngx-star-rating>
@@ -45,7 +44,7 @@
     <p *ngIf="userData.userType === 'USER'" id="userName">
       {{userData.profiles.user.name}}
     </p>
-    <p>{{bodyTitle}}</p>
+    <p class="job-search">{{bodyTitle}}</p>
     <div class="menuHomePage" *ngIf="userData.userType === 'EMPLOYER'">
       <hr />
       <div (click)="employerInfoPage()">
@@ -60,10 +59,11 @@
       <div (click)="advertisingPage()">
         <p>Administrar Publicidad</p>
       </div>
+      <hr />
     </div>
     <div class="menuHomePage" *ngIf="userData.userType === 'USER'">
       <hr />
-      <div (click)="userGeneralDataPage()">
+      <div (click)="userGeneralDataPage()" class="">
         <p>Datos Generales</p>
         <img *ngIf="currentStep >= 1" src="../../../assets/images/check.png" alt="" />
       </div>
@@ -72,16 +72,66 @@
         <p>CV</p>
         <img *ngIf="currentStep >= 2" src="../../../assets/images/check.png" alt="" />
       </div>
-      
+
       <hr />
       <div (click)="searchFilter()">
         <p>Ajuste de Búsqueda</p>
         <img *ngIf="currentStep === 3" src="../../../assets/images/check.png" alt="" />
       </div>
+      <hr />
     </div>
     <br />
-    <div  id="divBtn" >
+    <div id="divBtn">
       <button (click)="getPremiumPage()">Adquirir cuenta premium</button>
+
+      <button class="delete-account" (click)="openDeleteAccountModal()">Eliminar mi cuenta</button>
+
+      <a class="terms-and-conditions" href="https://www.stampofficialapp.com/terms" target="_blank">
+        Ver términos y condiciones
+      </a>
     </div>
   </div>
+
+  <!-- Modal section to delete the account -->
+  <div class="wrapper-modal-delete-account hidden">
+    <section class="wrapper-modal-delete-account__content">
+      <div>
+        <div class="closeIcon" (click)="closeDeleteAccountModal()">
+          <ion-icon name="close-outline"></ion-icon>
+        </div>
+        <div style="margin-top: 32px;">
+          <h3>Eliminación de cuenta de usuario</h3>
+          <p class="disclaimer" *ngIf="!deleteAccountSuccessful">
+            Una vez realizada la eliminación de la cuenta, usted tendrá acceso a ella durante los próximos 5 días,
+            pasado ese tiempo su cuenta quedará eliminada permanentemente.
+          </p>
+          <p class="disclaimer" *ngIf="deleteAccountSuccessful">
+            Se ha solicitado la eliminación de la cuenta correctamente.
+          </p>
+        </div>
+      </div>
+      <br>
+      <ng-container *ngIf="!deleteAccountSuccessful">
+        <form [formGroup]="deleteAccountForm">
+          <ion-item>
+            <ion-label position="floating">Motivo de la eliminación</ion-label>
+            <ion-textarea formControlName="reason" [rows]="4"></ion-textarea>
+          </ion-item>
+          <div class="divError">
+            <span class="error" *ngIf="isSubmitted && errorControl.reason.errors?.required">
+              El motivo requerido
+            </span>
+          </div>
+        </form>
+        <button (click)="deleteAccount()">Eliminar cuenta</button><br />
+      </ng-container>
+      <ng-container *ngIf="deleteAccountSuccessful">
+        <button (click)="closeDeleteAccountModal()">Aceptar</button><br />
+      </ng-container>
+
+
+    </section>
+  </div>
+
+  <div class="overlay hidden" id="overlayDeleteAccount" (click)="closeDeleteAccountModal();"></div>
 </ion-content>

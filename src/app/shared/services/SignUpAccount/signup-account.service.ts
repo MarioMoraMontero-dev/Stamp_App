@@ -18,7 +18,7 @@ export class SignupAccountService {
     return this.httpClient.post(environment.apiUrl + "/api/user/register", data);
   }
 
-  registerEmployer(data:any) {
+  registerEmployer(data: any) {
     return this.httpClient.post(environment.apiUrl + "/api/employer/register", data);
   }
 
@@ -50,5 +50,23 @@ export class SignupAccountService {
       ),
     };
     return this.httpClient.post(environment.apiUrl + "/api/user/secureregister", data, header);
+  }
+
+  deleteAccount(data: any) {
+    const { profile, reason, user } = data;
+    let userData = this.localStorageService.getData("userData");
+    let token = '';
+    if (userData) {
+      token = JSON.parse(userData).JWToken;
+    }
+    const options = {
+      headers: new HttpHeaders().set(
+        'Authorization',
+        token
+      ),
+      body: data
+    };
+    const url = `${environment.apiUrl}/api/account`;
+    return this.httpClient.request('delete', url,options);
   }
 }
