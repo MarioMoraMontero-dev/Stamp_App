@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-        <string>Stamp</string>
+	<string>Stamp</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -45,5 +45,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key></key>
+	<string></string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>¿Podemos acceder a tu ubicación para ofrecerte contenido y recomendaciones personalizadas? Esto nos permitirá brindarte una experiencia más relevante y cercana a tus necesidades.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>¿Podemos acceder a tu ubicación para ofrecerte contenido y recomendaciones personalizadas? Esto nos permitirá brindarte una experiencia más relevante y cercana a tus necesidades.</string>
 </dict>
 </plist>
