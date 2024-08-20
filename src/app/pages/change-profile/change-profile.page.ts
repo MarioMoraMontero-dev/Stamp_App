@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CameraSource } from '@capacitor/camera';
 import { Platform, ToastController } from '@ionic/angular';
 import { ngxLoadingAnimationTypes } from 'ngx-loading';
 import { Subscription } from 'rxjs';
@@ -8,7 +9,7 @@ import { EmployerSignUpDTO } from 'src/app/shared/interfaces/employerSignUpDTO.i
 import { UserSignUpDTO } from 'src/app/shared/interfaces/userSignUpDTO.interface';
 import { LocalStorageService } from 'src/app/shared/services/LocalStorage/local-storage.service';
 import { SignupAccountService } from 'src/app/shared/services/SignUpAccount/signup-account.service';
-import { Camera, CameraOptions } from '@awesome-cordova-plugins/Camera/ngx';
+import { Utils } from 'src/app/utils/Utils';
 
 
 @Component({
@@ -53,8 +54,7 @@ export class ChangeProfilePage implements OnInit {
     private platform: Platform,
     private toastController: ToastController,
     public formBuilder: FormBuilder,
-    public signupAccountService: SignupAccountService,
-    private camera: Camera
+    public signupAccountService: SignupAccountService
   ) {
     this.userSignUpForm = this.formBuilder.group({
       name: ['', [Validators.required]],
@@ -148,55 +148,39 @@ export class ChangeProfilePage implements OnInit {
   }
 
   // from library
-  pickImageLibrary() {
-    const options: CameraOptions = {
-      quality: 100,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
+  async pickImageLibrary() {
+    try {
+      this.isLoading = true;
+
+      const response = await Utils.takeOrPickImage(CameraSource.Photos);
+      const {imgObj, base64Img} = response;
+      this.base64Img = base64Img;
+      this.imgObj = imgObj;
+      this.isLoading = false;
+      this.closePhotoModal()
+    } catch (error) {
+      console.log("🚀 ~ ChangeProfilePage ~ pickImageLibrary ~ error:", error)
+      this.isLoading = false;
     }
-    this.isLoading = true;
-    this.camera.getPicture(options).then((imageData) => {
-      this.isLoading = false;
-      // this.profileImg = "";
-      this.base64Img = "data:image/jpeg;base64," + imageData;
-      getFileImg(this.base64Img).then((data) => {
-        var file = new File([data], "profile.jpg", { type: "image/jpg", lastModified: new Date().getTime() });
-        this.imgObj = file.name[0];
-        this.closePhotoModal();
-      });
-    }, (err) => {
-      this.isLoading = false;
-      this.openModalError("Por favor intenta de nuevo más tarde");
-      console.log("err")
-    })
   }
 
 
   // from camera
-  pickImageCamera() {
-    const options: CameraOptions = {
-      quality: 100,
-      sourceType: this.camera.PictureSourceType.CAMERA,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    }
-    this.isLoading = true;
-    this.camera.getPicture(options).then((imageData) => {
+  async pickImageCamera() {
+    try {
+      this.isLoading = true;
+
+      const response = await Utils.takeOrPickImage(CameraSource.Camera);
+      const { imgObj, base64Img } = response;
+      this.base64Img = base64Img;
+      this.imgObj = imgObj;
       this.isLoading = false;
-      // this.profileImg = ""
-      this.base64Img = "data:image/jpeg;base64," + imageData;
-      getFileImg(this.base64Img).then((data) => {
-        var file = new File([data], "profile.jpg", { type: "image/jpg", lastModified: new Date().getTime() });
-        this.imgObj = file.name[0];
-        this.closePhotoModal()
-      });
-    }, (err) => {
+      this.closePhotoModal()
+    } catch (error) {
+      console.log("🚀 ~ ChangeProfilePage ~ pickImageCamera ~ error:", error)
+      this.isLoading = false;
       this.openModalError("Por favor intenta de nuevo más tarde");
-      this.isLoading = false;
-    });
+    }
   }
 
 
@@ -414,10 +398,4 @@ export class ChangeProfilePage implements OnInit {
       this.incompletedFields = true;
     }
   }
-}
-
-async function getFileImg(base64Img: any): Promise<any> {
-  const base64Response = await fetch(base64Img);
-  const blob = await base64Response.blob();
-  return blob;
 }

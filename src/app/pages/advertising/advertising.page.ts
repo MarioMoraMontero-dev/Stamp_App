@@ -4,9 +4,10 @@ import { Router } from '@angular/router';
 import { ngxLoadingAnimationTypes } from 'ngx-loading';
 import { addAdsDTO } from 'src/app/shared/interfaces/addAdsDTO.interface';
 import { AdsService } from 'src/app/shared/services/Ads/ads.service';
-import { Camera, CameraOptions } from '@awesome-cordova-plugins/Camera/ngx';
 import { Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { CameraSource } from '@capacitor/camera';
+import { Utils } from 'src/app/utils/Utils';
 
 @Component({
   selector: 'app-advertising',
@@ -37,7 +38,6 @@ export class AdvertisingPage implements OnInit {
     public formBuilder: FormBuilder,
     private adsService: AdsService,
     private router: Router,
-    private camera: Camera,
     private platform: Platform,
 
   ) {
@@ -262,52 +262,39 @@ export class AdvertisingPage implements OnInit {
 
 
   // from library
-  pickImageLibrary() {
-    const options: CameraOptions = {
-      quality: 100,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
+  async pickImageLibrary() {
+    try {
+      this.isLoading = true;
+
+      const response = await Utils.takeOrPickImage(CameraSource.Photos);
+      const {imgObj, base64Img} = response;
+      this.base64Img = base64Img;
+      this.photoFile = imgObj;
+      this.isLoading = false;
+      this.closePhotoModal()
+    } catch (error) {
+      console.log("🚀 ~ AdvertisingPage ~ pickImageLibrary ~ error:", error)
+      this.isLoading = false;
     }
-    this.isLoading = true;
-    this.camera.getPicture(options).then((imageData) => {
-      this.isLoading = false;
-      this.base64Img = "data:image/jpeg;base64," + imageData;
-      getFileImg(this.base64Img).then((data: any) => {
-        var file = new File([data], "profile.jpg", { type: "image/jpg", lastModified: new Date().getTime() });
-        this.photoFile = file.name[0];
-        this.closePhotoModal();
-      });
-    }, (err) => {
-      this.isLoading = false;
-      this.openModalError("Por favor intenta de nuevo más tarde");
-    });
   }
 
 
   // from camera
-  pickImageCamera() {
-    const options: CameraOptions = {
-      quality: 100,
-      sourceType: this.camera.PictureSourceType.CAMERA,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    }
-    this.isLoading = true;
-    this.camera.getPicture(options).then((imageData) => {
+  async pickImageCamera() {
+    try {
+      this.isLoading = true;
+
+      const response = await Utils.takeOrPickImage(CameraSource.Camera);
+      const { imgObj, base64Img } = response;
+      this.base64Img = base64Img;
+      this.photoFile = imgObj;
       this.isLoading = false;
-      this.base64Img = "data:image/jpeg;base64," + imageData;
-      getFileImg(this.base64Img).then((data: any) => {
-        var file = new File([data], "profile.jpg", { type: "image/jpg", lastModified: new Date().getTime() });
-        this.photoFile = file.name[0];
-        this.closePhotoModal()
-      });
-    }, (err) => {
+      this.closePhotoModal()
+    } catch (error) {
+      console.log("🚀 ~ AdvertisingPage ~ pickImageCamera ~ error:", error)
       this.isLoading = false;
       this.openModalError("Por favor intenta de nuevo más tarde");
-    });
+    }
   }
 
 
@@ -387,14 +374,6 @@ export class AdvertisingPage implements OnInit {
   }
 
 
-
-}
-
-
-async function getFileImg(base64Img: any): Promise<any> {
-  const base64Response = await fetch(base64Img);
-  const blob = await base64Response.blob();
-  return blob;
 
 }
 

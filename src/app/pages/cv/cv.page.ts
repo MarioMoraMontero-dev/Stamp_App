@@ -8,10 +8,11 @@ import { AddUserLanguageDTO } from 'src/app/shared/interfaces/addUserLanguageDTO
 import { addUserLicenseDTO } from 'src/app/shared/interfaces/addUserLicenseDTO.interface';
 import { AddWorkExpDTO } from 'src/app/shared/interfaces/addWorkExpDTO.interface';
 import { CvService } from 'src/app/shared/services/Cv/cv.service';
-import { Camera, CameraOptions } from '@awesome-cordova-plugins/Camera/ngx';
 import { Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { CameraSource } from '@capacitor/camera';
+import { Utils } from 'src/app/utils/Utils';
 
 @Component({
   selector: 'app-cv',
@@ -93,7 +94,6 @@ export class CvPage implements OnInit {
     private router: Router,
     public formBuilder: FormBuilder,
     private cvService: CvService,
-    private camera: Camera,
     private platform: Platform,
   ) {
     this.academicForm = this.formBuilder.group({
@@ -300,6 +300,7 @@ export class CvPage implements OnInit {
         this.isLicensesPage = true;
         this.isMainPage = false;
         this.licenseList = data.data;
+        console.log("🚀 ~ CvPage ~ this.cvService.getUserLicenses ~ data.data:", data.data)
       } else {
         if (data.message) {
           this.openModalError(data.message);
@@ -822,103 +823,171 @@ export class CvPage implements OnInit {
 
  
   // from library
-  pickImageLibrary() {
-    const options: CameraOptions = {
-      quality: 100,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    }
-    this.isLoading = true;
-    this.camera.getPicture(options).then((imageData) => {
-      this.base64Img = "data:image/jpeg;base64," + imageData;
-      getFileImg(this.base64Img).then((data: any) => {
-        var file = new File([data], "profile.jpg", { type: "image/jpg", lastModified: new Date().getTime() });
-        if (this.docSelected == "USERID") {
-          this.cvService.addUserIdDoc(file.name[0]).subscribe((data: any) => {
-            this.isLoading = false;
-            let photo = data.data.file;
-            this.userIdImg = this.prefixUrlImg + photo;
-            this.closePhotoModal();
-          }, (err) => {
-            console.log(err);
-            this.closePhotoModal();
-            this.isLoading = false;
-            this.openModalError("Por favor intenta de nuevo más tarde");
-          })
-        } else if (this.docSelected == "CRIMINAL_RECORD") {
-          this.cvService.addUserCriminalRecordDoc(file.name[0]).subscribe((data: any) => {
-            this.isLoading = false;
-            let photo = this.prefixUrlImg + data.data.file;
-            this.criminalRecordImg = photo;
-            this.closePhotoModal();
-          }, (err) => {
-            console.log(err);
-            this.closePhotoModal();
-            this.isLoading = false;
-            this.openModalError("Por favor intenta de nuevo más tarde");
-          })
-        }
-      });
-    }, (err) => {
-      console.log("err", err)
-      this.isLoading = false;
-    });
-  } 
+  // pickImageLibrary() {
+  //   const options: CameraOptions = {
+  //     quality: 100,
+  //     sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+  //     destinationType: this.camera.DestinationType.DATA_URL,
+  //     encodingType: this.camera.EncodingType.JPEG,
+  //     mediaType: this.camera.MediaType.PICTURE
+  //   }
+  //   this.isLoading = true;
+  //   this.camera.getPicture(options).then((imageData) => {
+  //     this.base64Img = "data:image/jpeg;base64," + imageData;
+  //     getFileImg(this.base64Img).then((data: any) => {
+  //       var file = new File([data], "profile.jpg", { type: "image/jpg", lastModified: new Date().getTime() });
+  //       if (this.docSelected == "USERID") {
+  //         this.cvService.addUserIdDoc(file.name[0]).subscribe((data: any) => {
+  //           this.isLoading = false;
+  //           let photo = data.data.file;
+  //           this.userIdImg = this.prefixUrlImg + photo;
+  //           this.closePhotoModal();
+  //         }, (err) => {
+  //           console.log(err);
+  //           this.closePhotoModal();
+  //           this.isLoading = false;
+  //           this.openModalError("Por favor intenta de nuevo más tarde");
+  //         })
+  //       } else if (this.docSelected == "CRIMINAL_RECORD") {
+  //         this.cvService.addUserCriminalRecordDoc(file.name[0]).subscribe((data: any) => {
+  //           this.isLoading = false;
+  //           let photo = this.prefixUrlImg + data.data.file;
+  //           this.criminalRecordImg = photo;
+  //           this.closePhotoModal();
+  //         }, (err) => {
+  //           console.log(err);
+  //           this.closePhotoModal();
+  //           this.isLoading = false;
+  //           this.openModalError("Por favor intenta de nuevo más tarde");
+  //         })
+  //       }
+  //     });
+  //   }, (err) => {
+  //     console.log("err", err)
+  //     this.isLoading = false;
+  //   });
+  // } 
+  async pickImageLibrary() {
+    try {
+      this.isLoading = true;
 
-  pickImageCamera() {
-    const options: CameraOptions = {
-      quality: 100,
-      sourceType: this.camera.PictureSourceType.CAMERA,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    }
-    let oldThis = this;
-    this.isLoading = true;
-    this.camera.getPicture(options).then((imageData) => {
-      this.base64Img = "data:image/jpeg;base64," + imageData;
-      getFileImg(this.base64Img).then((data: any) => {
-        var file = new File([data], "profile.jpg", { type: "image/jpg", lastModified: new Date().getTime() });
-        if (this.docSelected == "USERID") {
-          this.cvService.addUserIdDoc(file.name[0]).subscribe((data: any) => {
-            this.isLoading = false;
-            let photo = data.data.file;
-            this.userIdImg = photo;
-            this.closePhotoModal();
-
-          }, (err) => {
-            console.log(err);
-            this.closePhotoModal();
-            this.isLoading = false;
-            this.openModalError("Por favor intenta de nuevo más tarde");
-          })
-        } else if (this.docSelected == "CRIMINAL_RECORD") {
-          this.cvService.addUserCriminalRecordDoc(file.name[0]).subscribe((data: any) => {
-            this.isLoading = false;
-            let photo = data.data.file;
-            this.criminalRecordImg = photo;
-            this.closePhotoModal();
-          }, (err) => {
-            console.log(err);
-            this.closePhotoModal();
-            this.isLoading = false;
-            this.openModalError("Por favor intenta de nuevo más tarde");
-          })
-        }
-      });
-    }, (err) => {
-      console.log("err", err)
+      const response = await Utils.takeOrPickImage(CameraSource.Photos);
+      const {imgObj, base64Img} = response;
+      this.base64Img = base64Img;
+      if (this.docSelected == "USERID") {
+        this.cvService.addUserIdDoc(imgObj).subscribe((data: any) => {
+          this.isLoading = false;
+          let photo = data.data.file;
+          this.userIdImg = this.prefixUrlImg + photo;
+          this.closePhotoModal();
+        }, (err) => {
+          console.log(err);
+          this.closePhotoModal();
+          this.isLoading = false;
+          this.openModalError("Por favor intenta de nuevo más tarde");
+        })
+      } else if (this.docSelected == "CRIMINAL_RECORD") {
+        this.cvService.addUserCriminalRecordDoc(imgObj).subscribe((data: any) => {
+          this.isLoading = false;
+          let photo = this.prefixUrlImg + data.data.file;
+          this.criminalRecordImg = photo;
+          this.closePhotoModal();
+        }, (err) => {
+          console.log(err);
+          this.closePhotoModal();
+          this.isLoading = false;
+          this.openModalError("Por favor intenta de nuevo más tarde");
+        })
+      }
+    } catch (error) {
+      console.log("🚀 ~ CvPage ~ pickImageLibrary ~ error:", error)
       this.isLoading = false;
-    });
+    }
   }
-}
 
+  // pickImageCamera() {
+  //   const options: CameraOptions = {
+  //     quality: 100,
+  //     sourceType: this.camera.PictureSourceType.CAMERA,
+  //     destinationType: this.camera.DestinationType.DATA_URL,
+  //     encodingType: this.camera.EncodingType.JPEG,
+  //     mediaType: this.camera.MediaType.PICTURE
+  //   }
+  //   let oldThis = this;
+  //   this.isLoading = true;
+  //   this.camera.getPicture(options).then((imageData) => {
+  //     this.base64Img = "data:image/jpeg;base64," + imageData;
+  //     getFileImg(this.base64Img).then((data: any) => {
+  //       var file = new File([data], "profile.jpg", { type: "image/jpg", lastModified: new Date().getTime() });
+  //       if (this.docSelected == "USERID") {
+  //         this.cvService.addUserIdDoc(file.name[0]).subscribe((data: any) => {
+  //           this.isLoading = false;
+  //           let photo = data.data.file;
+  //           this.userIdImg = photo;
+  //           this.closePhotoModal();
 
-async function getFileImg(base64Img: any): Promise<any> {
-  const base64Response = await fetch(base64Img);
-  const blob = await base64Response.blob();
-  return blob;
+  //         }, (err) => {
+  //           console.log(err);
+  //           this.closePhotoModal();
+  //           this.isLoading = false;
+  //           this.openModalError("Por favor intenta de nuevo más tarde");
+  //         })
+  //       } else if (this.docSelected == "CRIMINAL_RECORD") {
+  //         this.cvService.addUserCriminalRecordDoc(file.name[0]).subscribe((data: any) => {
+  //           this.isLoading = false;
+  //           let photo = data.data.file;
+  //           this.criminalRecordImg = photo;
+  //           this.closePhotoModal();
+  //         }, (err) => {
+  //           console.log(err);
+  //           this.closePhotoModal();
+  //           this.isLoading = false;
+  //           this.openModalError("Por favor intenta de nuevo más tarde");
+  //         })
+  //       }
+  //     });
+  //   }, (err) => {
+  //     console.log("err", err)
+  //     this.isLoading = false;
+  //   });
+  // }
+  async pickImageCamera() {
+    try {
+      this.isLoading = true;
 
+      const response = await Utils.takeOrPickImage(CameraSource.Camera);
+      const { imgObj, base64Img } = response;
+      this.base64Img = base64Img;
+      if (this.docSelected == "USERID") {
+        this.cvService.addUserIdDoc(imgObj).subscribe((data: any) => {
+          this.isLoading = false;
+          let photo = data.data.file;
+          this.userIdImg = this.prefixUrlImg + photo;
+          this.closePhotoModal();
+
+        }, (err) => {
+          console.log(err);
+          this.closePhotoModal();
+          this.isLoading = false;
+          this.openModalError("Por favor intenta de nuevo más tarde");
+        })
+      } else if (this.docSelected == "CRIMINAL_RECORD") {
+        this.cvService.addUserCriminalRecordDoc(imgObj).subscribe((data: any) => {
+          this.isLoading = false;
+          let photo = this.prefixUrlImg + data.data.file;
+          this.criminalRecordImg = photo;
+          this.closePhotoModal();
+        }, (err) => {
+          console.log(err);
+          this.closePhotoModal();
+          this.isLoading = false;
+          this.openModalError("Por favor intenta de nuevo más tarde");
+        })
+      }
+    } catch (error) {
+      console.log("🚀 ~ CvPage ~ pickImageCamera ~ error:", error)
+      this.isLoading = false;
+      this.openModalError("Por favor intenta de nuevo más tarde");
+    }
+  }
 }

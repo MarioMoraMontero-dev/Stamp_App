@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ngxLoadingAnimationTypes } from 'ngx-loading';
-import { Camera, CameraOptions } from '@awesome-cordova-plugins/Camera/ngx';
 import { UserSignUpDTO } from 'src/app/shared/interfaces/userSignUpDTO.interface';
 import { SignupAccountService } from 'src/app/shared/services/SignUpAccount/signup-account.service';
 import { EmployerSignUpDTO } from 'src/app/shared/interfaces/employerSignUpDTO.interface';
 import { Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { LocalStorageService } from 'src/app/shared/services/LocalStorage/local-storage.service';
+import { Utils } from 'src/app/utils/Utils';
+import { CameraSource } from '@capacitor/camera';
+
 
 
 @Component({
@@ -47,7 +49,6 @@ export class RegisterAccountPage implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     private router: Router,
-    private camera: Camera,
     public signupAccountService: SignupAccountService,
     private platform: Platform,
     private localStorageService: LocalStorageService
@@ -97,51 +98,40 @@ export class RegisterAccountPage implements OnInit {
   }
 
   // from library
-  pickImageLibrary() {
-    const options: CameraOptions = {
-      quality: 100,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
+  async pickImageLibrary() {
+    try {
+      this.isLoading = true;
+
+      const response = await Utils.takeOrPickImage(CameraSource.Photos);
+      const {imgObj, base64Img} = response;
+      this.base64Img = base64Img;
+      this.imgObj = imgObj;
+      this.isLoading = false;
+      this.closePhotoModal()
+    } catch (error) {
+      console.log("🚀 ~ RegisterAccountPage ~ pickImageLibrary ~ error:", error)
+      this.isLoading = false;
+      this.openModalError("Por favor intenta de nuevo más tarde");
     }
-    this.isLoading = true;
-    this.camera.getPicture(options).then((imageData) => {
-      this.isLoading = false;
-      this.base64Img = "data:image/jpeg;base64," + imageData;
-      getFileImg(this.base64Img).then((data) => {
-        var file = new File([data], "profile.jpg", { type: "image/jpg", lastModified: new Date().getTime() });
-        this.imgObj = file.name[0];
-        this.closePhotoModal();
-      });
-    }, (err) => {
-      this.isLoading = false;
-      console.log("err")
-    });
   }
 
 
   // from camera
-  pickImageCamera() {
-    const options: CameraOptions = {
-      quality: 100,
-      sourceType: this.camera.PictureSourceType.CAMERA,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
+  async pickImageCamera() {
+    try {
+      this.isLoading = true;
+
+      const response = await Utils.takeOrPickImage(CameraSource.Camera);
+      const {imgObj, base64Img} = response;
+      this.base64Img = base64Img;
+      this.imgObj = imgObj;
+      this.isLoading = false;
+      this.closePhotoModal()
+    } catch (error) {
+      console.log("🚀 ~ RegisterAccountPage ~ pickImageCamera ~ error:", error)
+      this.isLoading = false;
+      this.openModalError("Por favor intenta de nuevo más tarde");
     }
-    this.isLoading = true;
-    this.camera.getPicture(options).then((imageData) => {
-      this.isLoading = false;
-      this.base64Img = "data:image/jpeg;base64," + imageData;
-      getFileImg(this.base64Img).then((data) => {
-        var file = new File([data], "profile.jpg", { type: "image/jpg", lastModified: new Date().getTime() });
-        this.imgObj = file.name[0];
-        this.closePhotoModal()
-      });
-    }, (err) => {
-      this.isLoading = false;
-    });
   }
 
 
@@ -226,9 +216,8 @@ export class RegisterAccountPage implements OnInit {
         }
       }
     }, (err) => {
-      //this.openModalError(json.birth_date);
-     // this.openModalError(JSON.stringify(err))
-      this.openModalError("Por favor intenta de nuevo más tarde");
+      const msg = err?.error?.message || "Por favor intenta de nuevo más tarde";
+      this.openModalError(msg);
       this.isLoading = false;
     })
 
@@ -361,7 +350,7 @@ export class RegisterAccountPage implements OnInit {
     overlay?.classList.add("hidden");
   }
 
-  
+
 
   openModalError(text: string) {
     const modal = document.querySelector("#modalErrorRegister");
@@ -408,12 +397,6 @@ export class RegisterAccountPage implements OnInit {
       this.incompletedFields = true;
     }
   }
-
-}
-async function getFileImg(base64Img: any): Promise<any> {
-  const base64Response = await fetch(base64Img);
-  const blob = await base64Response.blob();
-  return blob;
 
 }
 

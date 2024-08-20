@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         debug {
-            storeFile file('D:\\Github Personal\\Stamp_App\\release_keystore.jks')
+            storeFile file('/Users/jnmcgregor/Desktop/Clic Arts/Stamp_App/release_keystore.jks')
             storePassword 'STAMP2024'
             keyAlias 'stamp_app'
             keyPassword 'STAMP2024'
@@ -14,8 +14,8 @@ android {
         applicationId "com.stamp.oficialapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "1.0"
+        versionCode 3
+        versionName "1.01"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.

@@ -45,9 +45,7 @@
       "id": "cordova-plugin-camera@^6.0.0"
     },
     "is_top_level": true,
-    "variables": {
-      "ANDROIDX_CORE_VERSION": "1.6.+"
-    }
+    "variables": {}
   },
   "cordova-plugin-file": {
     "source": {

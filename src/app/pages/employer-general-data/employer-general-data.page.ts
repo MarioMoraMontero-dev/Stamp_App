@@ -7,9 +7,10 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { updateEmployerDataDTO } from 'src/app/shared/interfaces/UpdateEmployerDataDTO.interface';
 import { Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { Camera, CameraOptions } from '@awesome-cordova-plugins/Camera/ngx';
 import { LocalStorageService } from 'src/app/shared/services/LocalStorage/local-storage.service';
 import { environment } from 'src/environments/environment';
+import { CameraSource } from '@capacitor/camera';
+import { Utils } from 'src/app/utils/Utils';
 
 
 @Component({
@@ -58,7 +59,6 @@ export class EmployerGeneralDataPage implements OnInit {
     private geolocation: Geolocation,
     private employerGeneralDataService: EmployerGeneralDataService,
     private platform: Platform,
-    private camera: Camera,
     public localStorageService: LocalStorageService
   ) {
     this.updateEmployerForm = this.formBuilder.group({
@@ -212,54 +212,39 @@ export class EmployerGeneralDataPage implements OnInit {
     }
   }
 
-  pickImageLibrary() {
-    const options: CameraOptions = {
-      quality: 100,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    }
-    this.isLoading = true;
-    this.camera.getPicture(options).then((imageData) => {
-      this.isLoading = false;
+  async pickImageLibrary() {
+    try {
+      this.isLoading = true;
+
+      const response = await Utils.takeOrPickImage(CameraSource.Photos);
+      const {imgObj, base64Img} = response;
       this.profileImg = "";
-      this.base64Img = "data:image/jpeg;base64," + imageData;
-      getFileImg(this.base64Img).then((data) => {
-        var file = new File([data], "profile.jpg", { type: "image/jpg", lastModified: new Date().getTime() });
-        this.imgObj = file.name[0];
-        this.closePhotoModal();
-      });
-    }, (err) => {
+      this.base64Img = base64Img;
+      this.imgObj = imgObj;
       this.isLoading = false;
-      this.openModalError("Por favor intenta de nuevo más tarde");
-      console.log("err")
-    });
+      this.closePhotoModal()
+    } catch (error) {
+      console.log("🚀 ~ EmployerGeneralDataPage ~ pickImageLibrary ~ error:", error)
+      this.isLoading = false;
+    }
   }
 
-  pickImageCamera() {
-    const options: CameraOptions = {
-      quality: 100,
-      sourceType: this.camera.PictureSourceType.CAMERA,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    }
-    this.isLoading = true;
-    this.camera.getPicture(options).then((imageData) => {
-      this.isLoading = false;
-      this.profileImg = ""
-      this.base64Img = "data:image/jpeg;base64," + imageData;
-      getFileImg(this.base64Img).then((data) => {
-        var file = new File([data], "profile.jpg", { type: "image/jpg", lastModified: new Date().getTime() });
-        this.imgObj = file.name[0];
-        this.closePhotoModal()
-      });
-    }, (err) => {
-      this.openModalError("Por favor intenta de nuevo más tarde");
-      this.isLoading = false;
-    });
+  async pickImageCamera() {
+    try {
+      this.isLoading = true;
 
+      const response = await Utils.takeOrPickImage(CameraSource.Camera);
+      const { imgObj, base64Img } = response;
+      this.profileImg = "";
+      this.base64Img = base64Img;
+      this.imgObj = imgObj;
+      this.isLoading = false;
+      this.closePhotoModal()
+    } catch (error) {
+      console.log("🚀 ~ EmployerGeneralDataPage ~ pickImageCamera ~ error:", error)
+      this.isLoading = false;
+      this.openModalError("Por favor intenta de nuevo más tarde");
+    }
   }
 
   updateData() {
@@ -276,7 +261,7 @@ export class EmployerGeneralDataPage implements OnInit {
       oldPassword: this.updateEmployerForm.controls.oldPassword.value,
       newPassword: this.updateEmployerForm.controls.newPassword.value
     }
-console.log(data)
+    console.log(data)
     const form = new FormData();
     form.append("name", data.name);
     form.append("phone_number", data.phone_number);
@@ -335,9 +320,3 @@ console.log(data)
 
 }
 
-async function getFileImg(base64Img: any): Promise<any> {
-  const base64Response = await fetch(base64Img);
-  const blob = await base64Response.blob();
-  return blob;
-
-}
